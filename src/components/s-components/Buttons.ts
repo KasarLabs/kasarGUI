@@ -45,3 +45,25 @@ export const OutlineButton = styled.button`
     background: #2962D2;
   }
 `
+
+export const ButtonSmall = styled.button`
+  width: 88px;
+  height: 42px;
+  left: 49px;
+  background: #2962D2;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 22px;
+  font-size: 20px;
+  transition: 0.3s;
+  &:hover {
+    color: #191919;
+    background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+  }
+`

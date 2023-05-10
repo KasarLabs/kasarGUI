@@ -1,12 +1,10 @@
 import React from 'react'
-import { Button, OutlineButton } from '../s-components/Buttons'
+import { Button, ButtonSmall, OutlineButton } from '../s-components/Buttons'
 import { Card } from '../s-components/Card'
-import { Gradient, H1, TextGray } from '../s-components/Texts'
+import { H1, TextGray } from '../s-components/Texts'
 import Logo from '../../assets/kasar.jpg'
 import styled from 'styled-components'
 import ArrowGray from '../../assets/icons/ArrowGray.png'
-import ArrowWhite from '../../assets/icons/ArrowWhite.png'
-
 
 const Image = styled.img`
   width: 61px;
@@ -32,18 +30,17 @@ const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: center;
 `
 
-function Step1() {
+function Step2() {
   return (
     <Card>
       <Rows>
         <Row>
-          <Image src={Logo} alt='starknode' />
-          <H1>Welcome to <Gradient>Osiris</Gradient></H1>
+          <H1>Update my Starknode</H1>
           <TextGray>
-            Let’s guide you through the process of setting
-            up or updating your Starknode.
+            Would you like to update your Starknode or setup another client (this second option will reset all previously synced data)
           </TextGray>
         </Row>
 
@@ -56,14 +53,11 @@ function Step1() {
             Update my Starknode
             <img src={ArrowGray} />
           </OutlineButton>
-          <Button>
-            Get a Starknode
-            <img src={ArrowWhite} />
-          </Button>
+          <ButtonSmall>Prev</ButtonSmall>
         </Buttons>
       </Rows>
     </Card>
   )
 }
 
-export default Step1
+export default Step2
