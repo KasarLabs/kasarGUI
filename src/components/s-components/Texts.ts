@@ -12,8 +12,16 @@ export const Gradient = styled.span`
   -webkit-text-fill-color: transparent;
 `
 
+export const Text = styled.p`
+  font-weight: 400;
+  font-size: 16px;
+  color: #000;
+  margin: 0;
+`
+
 export const TextGray = styled.p`
   font-weight: 400;
   font-size: 16px;
-color: #666666;
+  margin: 0;
+  color: #666666;
 `

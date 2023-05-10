@@ -34,7 +34,12 @@ const Buttons = styled.div`
   gap: 20px;
 `
 
-function Step1() {
+
+type StepProps = {
+  nextStep: (num: number) => void;
+}
+
+function Step1({ nextStep }: StepProps) {
   return (
     <Card>
       <Rows>
@@ -48,7 +53,7 @@ function Step1() {
         </Row>
 
         <Buttons>
-          <OutlineButton>
+          <OutlineButton onClick={() => nextStep(1)}>
             Setup my Starknode
             <img src={ArrowGray} />
           </OutlineButton>
