@@ -47,26 +47,20 @@ type PreviousStepProps = {
   previousStep: () => void;
 }
 
-function Step6({ nextStep, previousStep }: PreviousStepProps) {
+function Step7({ nextStep, previousStep }: PreviousStepProps) {
   return (
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
-          <TextGray>
-            6. Wait for your Starknode to be detected by your network.
-            Please do not unplug the device!
-          </TextGray>
+          <H1>Back home</H1>
         </Row>
-        <Button onClick={() => nextStep(7)}>Loading</Button>
-
 
         <Inputs>
-          <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
+          <ButtonSmall onClick={() => nextStep(0)}>Home</ButtonSmall>
         </Inputs>
       </Rows>
     </Card>
   )
 }
 
-export default Step6
+export default Step7

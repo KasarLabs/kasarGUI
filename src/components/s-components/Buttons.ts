@@ -47,7 +47,6 @@ export const OutlineButton = styled.button`
 `
 
 export const ButtonSmall = styled.button`
-  width: 88px;
   height: 42px;
   left: 49px;
   background: #2962D2;

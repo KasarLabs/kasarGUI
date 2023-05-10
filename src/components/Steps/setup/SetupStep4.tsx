@@ -30,9 +30,10 @@ const Row = styled.div`
 `
 
 const Inputs = styled.div`
-  display: flex;
+ display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+  align-items: center;
 `
 
 const Block = styled.div`
@@ -56,7 +57,6 @@ function Step4({ nextStep, previousStep }: PreviousStepProps) {
           </TextGray>
         </Row>
         <Button onClick={() => nextStep(5)}>Loading</Button>
-
         <Inputs>
           <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
         </Inputs>

@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, ButtonSmall, OutlineButton } from '../s-components/Buttons'
-import { Card } from '../s-components/Card'
-import { H1, TextGray } from '../s-components/Texts'
-import Logo from '../../assets/kasar.jpg'
+import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
+import { Card } from '../../s-components/Card'
+import { H1, TextGray } from '../../s-components/Texts'
+import Logo from '../../../assets/kasar.jpg'
 import styled from 'styled-components'
-import ArrowGray from '../../assets/icons/ArrowGray.png'
+import ArrowGray from '../../../assets/icons/ArrowGray.png'
 
 const Image = styled.img`
   width: 61px;
@@ -14,7 +14,9 @@ const Image = styled.img`
 const Rows = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 `
 
 const Row = styled.div`
@@ -31,9 +33,15 @@ const Buttons = styled.div`
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  width: 100%;
 `
 
-function Step2() {
+type StepProps = {
+  nextStep: (num: number) => void;
+  previousStep: () => void;
+}
+
+function UpdateStep1({ nextStep, previousStep }: StepProps) {
   return (
     <Card>
       <Rows>
@@ -45,19 +53,19 @@ function Step2() {
         </Row>
 
         <Buttons>
-          <OutlineButton>
+          <OutlineButton onClick={() => nextStep(1)}>
             Setup my Starknode
             <img src={ArrowGray} />
           </OutlineButton>
-          <OutlineButton>
+          <OutlineButton onClick={() => nextStep(12)}>
             Update my Starknode
             <img src={ArrowGray} />
           </OutlineButton>
-          <ButtonSmall>Prev</ButtonSmall>
         </Buttons>
+        <ButtonSmall>Prev</ButtonSmall>
       </Rows>
     </Card>
   )
 }
 
-export default Step2
+export default UpdateStep1

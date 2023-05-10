@@ -57,7 +57,7 @@ function Step1({ nextStep }: StepProps) {
             Setup my Starknode
             <img src={ArrowGray} />
           </OutlineButton>
-          <OutlineButton>
+          <OutlineButton onClick={() => nextStep(11)}>
             Update my Starknode
             <img src={ArrowGray} />
           </OutlineButton>

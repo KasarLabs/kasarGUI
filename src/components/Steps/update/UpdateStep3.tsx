@@ -2,29 +2,22 @@ import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { H1, Text, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
-import ArrowGray from '../../../assets/icons/ArrowGray.png'
-import SetupGif from '../../../assets/gif/setup.png'
-import { Input } from '@/components/s-components/Input'
-import { SpaceBetween } from '@/components/s-components/Flex'
 
-
-const Image = styled.img`
-  max-width: 180px;
-`
 
 const Rows = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
   height: 100%;
+  align-items: center;
 `
 
 const Row = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   p {
     text-align: center;
   }
@@ -33,8 +26,7 @@ const Row = styled.div`
 const Inputs = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  align-items: center;
+  gap: 15px;
 `
 
 const Block = styled.div`
@@ -47,19 +39,20 @@ type PreviousStepProps = {
   previousStep: () => void;
 }
 
-function Step6({ nextStep, previousStep }: PreviousStepProps) {
+function UpdateStep3({ nextStep, previousStep }: PreviousStepProps) {
   return (
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
-          <TextGray>
-            6. Wait for your Starknode to be detected by your network.
-            Please do not unplug the device!
-          </TextGray>
+          <H1>Update my starknode</H1>
         </Row>
-        <Button onClick={() => nextStep(7)}>Loading</Button>
+        <Row>
 
+          <TextGray>
+            Detecting any update on your client
+          </TextGray>
+          <Button onClick={() => nextStep(14)}>Loading</Button>
+        </Row>
 
         <Inputs>
           <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
@@ -69,4 +62,4 @@ function Step6({ nextStep, previousStep }: PreviousStepProps) {
   )
 }
 
-export default Step6
+export default UpdateStep3
