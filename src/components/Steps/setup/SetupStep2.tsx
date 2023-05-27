@@ -2,9 +2,7 @@ import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { H1, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
-import ArrowGray from '../../../assets/icons/ArrowGray.png'
-import SetupGif from '../../../assets/gif/setup.png'
-
+import { shell } from 'electron';
 
 const Image = styled.img`
   max-width: 180px;
@@ -38,7 +36,31 @@ type PreviousStepProps = {
   previousStep: () => void;
 }
 
+
+
 function Step2({ nextStep, previousStep }: PreviousStepProps) {
+
+  // const handleConnect = async () => {
+  //   console.log("1")
+  //   const accounts = await window?.ethereum?.request({
+  //     method: 'eth_requestAccounts',
+  //   })
+  //   console.log("2")
+
+  //   if (accounts.length > 0) {
+  //     const balance = await window.ethereum!.request({
+  //       method: 'eth_getBalance',
+  //       params: [accounts[0], 'latest'],
+  //     })
+  //   }
+  // }
+
+  const handleClick = () => {
+    shell.openExternal('https://github.com');
+    nextStep(3)
+  }
+
+
   return (
     <Card>
       <Rows>
@@ -48,10 +70,14 @@ function Step2({ nextStep, previousStep }: PreviousStepProps) {
             2. Please identify yourself using your wallet
           </TextGray>
         </Row>
-        <OutlineButton onClick={() => nextStep(3)}>
+        {/* <OutlineButton onClick={() => nextStep(3)}>
           Connect your wallet
           <img src={ArrowGray} />
+        </OutlineButton> */}
+        <OutlineButton onClick={handleClick}>
+          Connect Wallet
         </OutlineButton>
+        {/* <ButtonConnect /> */}
 
         <Buttons>
           <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>

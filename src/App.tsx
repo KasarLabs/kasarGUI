@@ -13,6 +13,7 @@ import UpdateStep3 from './components/Steps/update/UpdateStep3'
 import UpdateStep4 from './components/Steps/update/UpdateStep4'
 import { useState } from 'react'
 
+
 const Main = styled.div`
   display: flex;
   align-items: center;
@@ -34,6 +35,8 @@ function App() {
   const nextStep = (num: number) => {
     setStep(num);
   }
+
+
   return (
     <Main>
       {step === 0 && <Step1 nextStep={nextStep} />}

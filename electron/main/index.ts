@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
@@ -45,6 +45,8 @@ async function createWindow() {
   win = new BrowserWindow({
     title: 'Main window',
     icon: join(process.env.PUBLIC, 'favicon.ico'),
+    width: 800,
+    height: 800,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -119,3 +121,15 @@ ipcMain.handle('open-win', (_, arg) => {
   }
 })
 
+ipcMain.on('open-directory-dialog', (event) => {
+  dialog.showOpenDialog({
+
+    properties: ['openDirectory'],
+  }).then(res => {
+    if (!res.canceled) {
+      event.sender.send('selected-directory', res.filePaths[0])
+    }
+  }).catch(err => {
+    console.log(err)
+  })
+})

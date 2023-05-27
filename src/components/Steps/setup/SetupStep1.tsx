@@ -4,7 +4,7 @@ import { H1, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
 import SetupGif from '../../../assets/gif/setup.png'
-
+import { ipcRenderer } from 'electron'
 
 const Image = styled.img`
   max-width: 180px;
@@ -40,7 +40,19 @@ type StepProps = {
   previousStep: () => void;
 }
 
+
+
 function Step1({ nextStep, previousStep }: StepProps) {
+
+  const handleClick = () => {
+    ipcRenderer.send('open-directory-dialog')
+    nextStep(2)
+  }
+
+  ipcRenderer.on('selected-directory', (event, path) => {
+    console.log(path)
+  })
+
   return (
     <Card>
       <Rows>
@@ -53,7 +65,7 @@ function Step1({ nextStep, previousStep }: StepProps) {
         <Image src={SetupGif} alt='setup starknode' />
 
         <Buttons>
-          <OutlineButton onClick={() => nextStep(2)}>
+          <OutlineButton onClick={handleClick}>
             Setup your micro SD storage
             <img src={ArrowGray} />
           </OutlineButton>
