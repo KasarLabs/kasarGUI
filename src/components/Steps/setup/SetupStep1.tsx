@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
 import SetupGif from '../../../assets/gif/setup.png'
 import { ipcRenderer } from 'electron'
+import { useEffect, useState } from 'react'
 
 const Image = styled.img`
   max-width: 180px;
@@ -43,16 +44,21 @@ type StepProps = {
 
 
 function Step1({ nextStep, previousStep }: StepProps) {
+  const [pathSD, setPathSD] = useState('')
 
   const handleClick = () => {
     ipcRenderer.send('open-directory-dialog')
-    nextStep(2)
+    // nextStep(2)
   }
 
   ipcRenderer.on('selected-directory', (event, path) => {
     console.log(path)
+    setPathSD(path)
   })
 
+  useEffect(() => {
+    if (pathSD) nextStep(2)
+  }, [pathSD])
   return (
     <Card>
       <Rows>

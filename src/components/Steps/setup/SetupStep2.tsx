@@ -6,10 +6,9 @@ import { Input } from '@/components/s-components/Input'
 import { shell } from 'electron';
 import { useState } from 'react'
 import axios from 'axios'
-
-const Image = styled.img`
-  max-width: 180px;
-`
+import { SeparatorSM } from '@/components/s-components/utils'
+import Login from '@/components/Login'
+import Register from '@/components/Register'
 
 const Rows = styled.div`
   display: flex;
@@ -47,35 +46,42 @@ const Block = styled.div`
   flex-direction: column;
 `
 
+const FlexRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+`
+
 type PreviousStepProps = {
   nextStep: (num: number) => void;
   previousStep: () => void;
 }
 
 
+const Span = styled.span`
+  cursor: pointer;
+  color:#2969D2;
+`
+
 
 function Step2({ nextStep, previousStep }: PreviousStepProps) {
+  const [userExist, setUserExist] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [secret, setSecret] = useState('');
   const [ok, setOk] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const handleClick = () => {
-    nextStep(3)
-  }
+  const [state, setState] = useState({});
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     setLoading(true);
-    console.log('heyy')
     try {
-      const { data } = await axios.post('http://localhost:8000/api/register', {
+      const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/register`, {
         firstName: firstName,
         lastName: lastName,
         userName: userName,
@@ -94,6 +100,7 @@ function Step2({ nextStep, previousStep }: PreviousStepProps) {
         setEmail('');
         setPassword('');
         setLoading(false);
+        nextStep(3);
       }
     } catch (err) {
       console.log(err)
@@ -101,6 +108,31 @@ function Step2({ nextStep, previousStep }: PreviousStepProps) {
     }
   }
 
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+
+    setLoading(true);
+    try {
+      const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/login`, {
+        email: email,
+        password: password,
+      });
+      if (data.error) {
+        console.log(data.error)
+        setLoading(false)
+      } else {
+        setState({
+          user: data.user,
+          token: data.token
+        });
+        setLoading(false);
+        nextStep(3);
+      }
+    } catch (err) {
+      // console.log(err.response.data);
+      setLoading(false);
+    }
+  }
   return (
     <Card>
       <Rows>
@@ -110,37 +142,43 @@ function Step2({ nextStep, previousStep }: PreviousStepProps) {
             2. Register
           </TextGray>
         </Row>
-        <form onSubmit={handleSubmit} id='auth'>
-          <Inputs>
-            <Block>
-              <Text>First name</Text>
-              <Input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder='Enter your first name' />
-            </Block>
-            <Block>
-              <Text>Last name</Text>
-              <Input value={lastName} onChange={e => setLastName(e.target.value)} placeholder='Enter your last name' />
-            </Block>
-            <Block>
-              <Text>Mail</Text>
-              <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email' />
-            </Block>
-            <Block>
-              <Text>Username</Text>
-              <Input value={userName} onChange={e => setUserName(e.target.value)} placeholder='Enter your username' />
-            </Block>
-            <Block>
-              <Text>Password</Text>
-              <Input value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter a password' />
-            </Block>
-          </Inputs>
-        </form>
-        <OutlineButton type='submit' form='auth' value='Submit'>
-          Submit
-        </OutlineButton>
-
-        <Buttons>
-          <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
-        </Buttons>
+        {userExist ?
+          <Login
+            handleLogin={handleLogin}
+            email={email}
+            password={password}
+            setEmail={setEmail}
+            setPassword={setPassword}
+          />
+          :
+          <Register
+            handleSubmit={handleSubmit}
+            email={email}
+            password={password}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            userName={userName}
+            setUserName={setUserName}
+          />
+        }
+        {userExist ?
+          <Text>Not registered yet? <Span onClick={() => setUserExist(false)}>Register</Span></Text>
+          :
+          <Text>Already have an account? <Span onClick={() => setUserExist(true)}>Login</Span></Text>
+        }
+        <SeparatorSM />
+        <FlexRow>
+          <Buttons>
+            <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
+          </Buttons>
+          <ButtonSmall type='submit' form='auth' value='Submit'>
+            Submit
+          </ButtonSmall>
+        </FlexRow>
       </Rows>
     </Card>
   )
