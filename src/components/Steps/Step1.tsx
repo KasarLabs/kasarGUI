@@ -40,11 +40,11 @@ type StepProps = {
 }
 
 function Step1({ nextStep }: StepProps) {
-  useEffect(() => {
-    const ret = axios.get('http://localhost:8000/api/test').then(res => {
-      console.log(res)
-    })
-  }, [])
+  // useEffect(() => {
+  //   const ret = axios.get('http://localhost:8000/api/test').then(res => {
+  //     console.log(res)
+  //   })
+  // }, [])
   return (
     <Card>
       <Rows>
