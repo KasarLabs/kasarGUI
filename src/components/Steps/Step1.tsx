@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, OutlineButton } from '../s-components/Buttons'
 import { Card } from '../s-components/Card'
 import { Gradient, H1, TextGray } from '../s-components/Texts'
@@ -6,7 +6,10 @@ import Logo from '../../assets/kasar.jpg'
 import styled from 'styled-components'
 import ArrowGray from '../../assets/icons/ArrowGray.png'
 import ArrowWhite from '../../assets/icons/ArrowWhite.png'
+import axios from 'axios'
+import { config } from 'dotenv'
 
+config()
 
 const Image = styled.img`
   width: 61px;
@@ -40,6 +43,11 @@ type StepProps = {
 }
 
 function Step1({ nextStep }: StepProps) {
+  useEffect(() => {
+    const ret = axios.get(`${process.env.SERVER_PUBLIC_API!}/test`).then(res => {
+      console.log(res)
+    })
+  }, [])
   return (
     <Card>
       <Rows>
