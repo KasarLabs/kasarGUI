@@ -2,15 +2,11 @@ import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { H1, Text, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
-import ArrowGray from '../../../assets/icons/ArrowGray.png'
-import SetupGif from '../../../assets/gif/setup.png'
-import { Input } from '@/components/s-components/Input'
-import { SpaceBetween } from '@/components/s-components/Flex'
 import { IJson } from '@/App'
 import fs from 'fs'
 import path from 'path'
-import usbDetect from 'usb-detection'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { LineProgressBar } from '@frogress/line'
 
 const Image = styled.img`
   max-width: 180px;
@@ -53,17 +49,27 @@ type PreviousStepProps = {
 }
 
 function Step4({ nextStep, previousStep, jsonData, pathSD }: PreviousStepProps) {
+  const [progress, setProgress] = useState(0)
   useEffect(() => {
-    fs.writeFile(path.join(process.cwd(), 'output.json'), JSON.stringify(jsonData), 'utf8', function (err) {
+    if (progress < 100) {
+      const timer = setInterval(() => {
+        setProgress(progress => progress + 1)
+      }, 80)
+      return () => clearInterval(timer)
+    }
+    if (progress === 100) {
+      nextStep(5)
+    }
+  }, [progress])
+
+  useEffect(() => {
+    fs.writeFile(path.join(process.cwd(), 'config.json'), JSON.stringify(jsonData), 'utf8', function (err) {
       if (err) {
         console.log('error', err)
       }
-      console.log('JSON has been saved')
     })
-    const source = path.join(process.cwd(), 'output.json')
-    const destination = path.join(pathSD, 'output.json')
-    console.log('source', source)
-    console.log('destination', destination)
+    const source = path.join(process.cwd(), 'config.json')
+    const destination = path.join(pathSD, 'config.json')
     fs.rename(source, destination, function (err) {
       if (err) {
         console.log(err)
@@ -80,7 +86,7 @@ function Step4({ nextStep, previousStep, jsonData, pathSD }: PreviousStepProps) 
             4. Give your Starknode a moment to setup
           </TextGray>
         </Row>
-        <Button onClick={() => nextStep(5)}>Loading</Button>
+        <LineProgressBar percent={progress} />
         <Inputs>
           <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
         </Inputs>

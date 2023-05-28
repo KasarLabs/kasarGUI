@@ -53,10 +53,12 @@ const FlexRow = styled.div`
 type PreviousStepProps = {
   nextStep: (num: number) => void;
   previousStep: () => void;
+  setEmail: (arg: string) => void;
+  email: string;
+
 }
 
-function LoginStep({ nextStep, previousStep }: PreviousStepProps) {
-  const [email, setEmail] = useState('');
+function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProps) {
   const [password, setPassword] = useState('');
   const [state, setState] = useState({});
 

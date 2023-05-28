@@ -6,7 +6,9 @@ import ArrowGray from '../../../assets/icons/ArrowGray.png'
 import SetupGif from '../../../assets/gif/setup.png'
 import { Input } from '@/components/s-components/Input'
 import { SpaceBetween } from '@/components/s-components/Flex'
-
+import { useEffect } from 'react'
+import confetti from 'canvas-confetti'
+import { Separator } from '@/components/s-components/utils'
 
 const Image = styled.img`
   max-width: 180px;
@@ -16,8 +18,9 @@ const Rows = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+
   height: 100%;
 `
 
@@ -47,23 +50,25 @@ type PreviousStepProps = {
 }
 
 function Step5({ nextStep, previousStep }: PreviousStepProps) {
+
+  useEffect(() => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+  }, [])
   return (
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
-          <TextGray>
-            5. Plug your configured microSD to
-            your Starknode and connect it to
-            an internet access point and a power station
-          </TextGray>
+          <H1>Congratulations</H1>
+          <Text>Installation is complete!</Text>
         </Row>
-        <Image src={SetupGif} alt='setup starknode' />
-
-        <SpaceBetween>
-          <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
-          <ButtonSmall onClick={() => nextStep(6)}>Next</ButtonSmall>
-        </SpaceBetween>
+        <Separator />
+        <Inputs>
+          <ButtonSmall onClick={() => nextStep(-1)}>Home</ButtonSmall>
+        </Inputs>
       </Rows>
     </Card>
   )

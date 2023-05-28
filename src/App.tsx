@@ -29,15 +29,17 @@ export interface IStep {
 }
 
 export interface IJson {
-  nameNode: string;
-  clientNode: string;
-  rpcKey: string;
+  name: string;
+  client: string;
+  rpc_key: string;
+  token: string;
 }
 
 function App() {
   const [step, setStep] = useState(-1);
   const [jsonData, setJsonData] = useState<IJson>();
   const [pathSD, setPathSD] = useState('')
+  const [email, setEmail] = useState('');
 
   const previousStep = () => {
     setStep(step - 1);
@@ -52,10 +54,10 @@ function App() {
     <Main>
       {step === -1 && <Step1 nextStep={nextStep} />}
       {step === 0 && <Setup0 nextStep={nextStep} previousStep={previousStep} />}
-      {step === 8 && <LoginStep nextStep={nextStep} previousStep={previousStep} />}
+      {step === 8 && <LoginStep nextStep={nextStep} previousStep={previousStep} setEmail={setEmail} email={email} />}
       {step === 1 && <Setup2 nextStep={nextStep} previousStep={previousStep} />}
       {step === 2 && <Setup1 nextStep={nextStep} previousStep={previousStep} setPathSD={setPathSD} pathSD={pathSD} />}
-      {step === 3 && <Setup3 nextStep={nextStep} previousStep={previousStep} setJsonData={setJsonData} jsonData={jsonData} />}
+      {step === 3 && <Setup3 nextStep={nextStep} previousStep={previousStep} setJsonData={setJsonData} jsonData={jsonData} email={email} />}
       {step === 4 && <Setup4 nextStep={nextStep} previousStep={previousStep} jsonData={jsonData} pathSD={pathSD} />}
       {step === 5 && <Setup5 nextStep={nextStep} previousStep={previousStep} />}
       {step === 6 && <Setup6 nextStep={nextStep} previousStep={previousStep} />}

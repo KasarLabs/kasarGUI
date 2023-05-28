@@ -7,7 +7,6 @@ import { shell } from 'electron';
 import { useState } from 'react'
 import axios from 'axios'
 import { SeparatorSM } from '@/components/s-components/utils'
-import Login from '@/components/Login'
 import Register from '@/components/Register'
 
 const Rows = styled.div`
@@ -79,11 +78,6 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
     e.preventDefault();
 
     try {
-      console.log(firstName)
-      console.log(lastName)
-      console.log(userName)
-      console.log(email)
-      console.log(password)
       const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/register`, {
         firstName: firstName,
         lastName: lastName,

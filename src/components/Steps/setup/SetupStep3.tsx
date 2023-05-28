@@ -8,10 +8,8 @@ import { Input } from '@/components/s-components/Input'
 import { SpaceBetween } from '@/components/s-components/Flex'
 import { IJson } from '@/App'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-
-const Image = styled.img`
-  max-width: 180px;
-`
+import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
 
 const Rows = styled.div`
   display: flex;
@@ -48,19 +46,30 @@ type PreviousStepProps = {
   previousStep: () => void;
   setJsonData: Dispatch<SetStateAction<IJson | undefined>>;
   jsonData: IJson | undefined;
+  email: string;
 }
 
 
-function Step3({ nextStep, previousStep, setJsonData, jsonData }: PreviousStepProps) {
-  const [name, setName] = useState('')
+function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: PreviousStepProps) {
+  const [nameNode, setName] = useState('')
   const [client, setClient] = useState('')
   const [rpc, setRpc] = useState('')
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (name && client && rpc) {
-      setJsonData({ nameNode: name, clientNode: client, rpcKey: rpc })
-      nextStep(4)
+    try {
+      const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/getTokenOfUser`, {
+        email: email,
+      });
+      if (data.error) {
+        console.log(data.error)
+      }
+      if (nameNode && client && rpc && data) {
+        setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.message })
+        nextStep(4)
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -77,7 +86,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData }: PreviousStepPr
           <Inputs>
             <Block>
               <Text>Node name</Text>
-              <Input value={name} onChange={e => setName(e.target.value)} placeholder='Enter a name' />
+              <Input value={nameNode} onChange={e => setName(e.target.value)} placeholder='Enter a name' />
             </Block>
             <Block>
               <Text>Client</Text>
@@ -90,7 +99,6 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData }: PreviousStepPr
           </Inputs>
         </form>
         <SpaceBetween>
-          {/* <ButtonSmall onClick={previousStep}>Prev</ButtonSmall> */}
           <ButtonSmall type='submit' form='auth'>Submit</ButtonSmall>
         </SpaceBetween>
       </Rows>
