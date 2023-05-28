@@ -1,15 +1,10 @@
-import React, { useEffect } from 'react'
-import { Button, OutlineButton } from '../s-components/Buttons'
-import { Card } from '../s-components/Card'
-import { Gradient, H1, TextGray } from '../s-components/Texts'
-import Logo from '../../assets/kasar.jpg'
+import React from 'react'
+import { Button, OutlineButton } from '../../s-components/Buttons'
+import { Card } from '../../s-components/Card'
+import { Gradient, H1, TextGray } from '../../s-components/Texts'
+import Logo from '../../../assets/kasar.jpg'
 import styled from 'styled-components'
-import ArrowGray from '../../assets/icons/ArrowGray.png'
-import ArrowWhite from '../../assets/icons/ArrowWhite.png'
-import { config } from 'dotenv'
-import { shell } from 'electron'
-
-config()
+import ArrowGray from '../../../assets/icons/ArrowGray.png'
 
 const Image = styled.img`
   width: 61px;
@@ -36,14 +31,13 @@ const Buttons = styled.div`
   flex-direction: column;
   gap: 20px;
 `
-
-
-type StepProps = {
+type PreviousStepProps = {
   nextStep: (num: number) => void;
+  previousStep: () => void;
 }
 
-function Step1({ nextStep }: StepProps) {
 
+function SetupStep0({ nextStep, previousStep }: PreviousStepProps) {
   return (
     <Card>
       <Rows>
@@ -57,22 +51,18 @@ function Step1({ nextStep }: StepProps) {
         </Row>
 
         <Buttons>
-          <OutlineButton onClick={() => nextStep(0)}>
-            Setup my Starknode
+          <OutlineButton onClick={() => nextStep(1)}>
+            Register
             <img src={ArrowGray} />
           </OutlineButton>
-          <OutlineButton disabled>
-            Update my Starknode
+          <OutlineButton onClick={() => nextStep(8)}>
+            Login
             <img src={ArrowGray} />
           </OutlineButton>
-          <Button onClick={() => shell.openExternal('https://kasar.io')}>
-            Get a Starknode
-            <img src={ArrowWhite} />
-          </Button>
         </Buttons>
       </Rows>
     </Card>
   )
 }
 
-export default Step1
+export default SetupStep0

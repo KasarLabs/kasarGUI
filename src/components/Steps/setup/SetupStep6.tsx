@@ -59,8 +59,6 @@ function Step6({ nextStep, previousStep }: PreviousStepProps) {
           </TextGray>
         </Row>
         <Button onClick={() => nextStep(7)}>Loading</Button>
-
-
         <Inputs>
           <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
         </Inputs>

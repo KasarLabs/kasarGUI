@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Input } from '@/components/s-components/Input'
 import { Text } from './s-components/Texts'
@@ -34,6 +34,8 @@ export interface IRegister {
   setFirstName: (e: string) => void;
   setLastName: (e: string) => void;
   setUserName: (e: string) => void;
+  setStep: (e: number) => void;
+  step: number;
 }
 
 
@@ -49,32 +51,42 @@ function Register({
   setLastName,
   userName,
   setUserName,
+  setStep,
+  step
 }: IRegister) {
   return (
     <form onSubmit={handleSubmit} id='auth'>
       <Inputs>
-        <FlexRow>
+        {step === 1 &&
+          <FlexRow>
+            <Block>
+              <Text>First name</Text>
+              <Input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder='Enter your first name' />
+            </Block>
+            <Block>
+              <Text>Last name</Text>
+              <Input value={lastName} onChange={e => setLastName(e.target.value)} placeholder='Enter your last name' />
+            </Block>
+          </FlexRow>
+        }
+        {step === 2 &&
           <Block>
-            <Text>First name</Text>
-            <Input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder='Enter your first name' />
+            <Text>Username</Text>
+            <Input value={userName} onChange={e => setUserName(e.target.value)} placeholder='Enter your username' />
           </Block>
+        }
+        {step === 3 &&
           <Block>
-            <Text>Last name</Text>
-            <Input value={lastName} onChange={e => setLastName(e.target.value)} placeholder='Enter your last name' />
+            <Text>Mail</Text>
+            <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email' />
           </Block>
-        </FlexRow>
-        <Block>
-          <Text>Mail</Text>
-          <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email' />
-        </Block>
-        <Block>
-          <Text>Username</Text>
-          <Input value={userName} onChange={e => setUserName(e.target.value)} placeholder='Enter your username' />
-        </Block>
-        <Block>
-          <Text>Password</Text>
-          <Input value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter a password' />
-        </Block>
+        }
+        {step === 4 &&
+          <Block>
+            <Text>Password</Text>
+            <Input value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter a password' />
+          </Block>
+        }
       </Inputs>
     </form>
   )
