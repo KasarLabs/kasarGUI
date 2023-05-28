@@ -73,15 +73,17 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [ok, setOk] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [state, setState] = useState({});
   const [step, setStep] = useState(1)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    setLoading(true);
     try {
+      console.log(firstName)
+      console.log(lastName)
+      console.log(userName)
+      console.log(email)
+      console.log(password)
       const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/register`, {
         firstName: firstName,
         lastName: lastName,
@@ -90,7 +92,6 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         password: password,
       });
       if (data.error) {
-        setLoading(false)
         console.log(data.error)
       }
       if (data.success) {
@@ -100,40 +101,13 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         setUserName('');
         setEmail('');
         setPassword('');
-        setLoading(false);
-        nextStep(2);
+        nextStep(9);
       }
     } catch (err) {
       console.log(err)
-      setLoading(false);
     }
   }
 
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
-
-    setLoading(true);
-    try {
-      const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/login`, {
-        email: email,
-        password: password,
-      });
-      if (data.error) {
-        console.log(data.error)
-        setLoading(false)
-      } else {
-        setState({
-          user: data.user,
-          token: data.token
-        });
-        setLoading(false);
-        nextStep(2);
-      }
-    } catch (err) {
-      // console.log(err.response.data);
-      setLoading(false);
-    }
-  }
   return (
     <Card>
       <Rows>
@@ -143,42 +117,25 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
             2. Register
           </TextGray>
         </Row>
-        {userExist ?
-          <Login
-            handleLogin={handleLogin}
-            email={email}
-            password={password}
-            setEmail={setEmail}
-            setPassword={setPassword}
-          />
-          :
-          <Register
-            handleSubmit={handleSubmit}
-            email={email}
-            password={password}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            firstName={firstName}
-            setFirstName={setFirstName}
-            lastName={lastName}
-            setLastName={setLastName}
-            userName={userName}
-            setUserName={setUserName}
-            setStep={setStep}
-            step={step}
-          />
-        }
-        {step === 1 &&
-          <>
-            {userExist ?
-              <Text>Not registered yet? <Span onClick={() => setUserExist(false)}>Register</Span></Text>
-              :
-              <Text>Already have an account? <Span onClick={() => setUserExist(true)}>Login</Span></Text>
-            }
-          </>
-        }
+
+        <Register
+          handleSubmit={handleSubmit}
+          email={email}
+          password={password}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          firstName={firstName}
+          setFirstName={setFirstName}
+          lastName={lastName}
+          setLastName={setLastName}
+          userName={userName}
+          setUserName={setUserName}
+          setStep={setStep}
+          step={step}
+        />
+
         <SeparatorSM />
-        {step < 4 ?
+        {step === 1 || step === 2 || step === 3 || step === 4 ?
           <FlexRow>
             <Buttons>
               <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
