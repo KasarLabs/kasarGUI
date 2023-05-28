@@ -90,7 +90,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData }: PreviousStepPr
           </Inputs>
         </form>
         <SpaceBetween>
-          <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
+          {/* <ButtonSmall onClick={previousStep}>Prev</ButtonSmall> */}
           <ButtonSmall type='submit' form='auth'>Submit</ButtonSmall>
         </SpaceBetween>
       </Rows>

@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import ArrowGray from '../../assets/icons/ArrowGray.png'
 import ArrowWhite from '../../assets/icons/ArrowWhite.png'
 import { config } from 'dotenv'
+import { shell } from 'electron'
 
 config()
 
@@ -60,11 +61,11 @@ function Step1({ nextStep }: StepProps) {
             Setup my Starknode
             <img src={ArrowGray} />
           </OutlineButton>
-          <OutlineButton onClick={() => nextStep(11)}>
+          <OutlineButton disabled>
             Update my Starknode
             <img src={ArrowGray} />
           </OutlineButton>
-          <Button>
+          <Button onClick={() => shell.openExternal('https://kasar.io')}>
             Get a Starknode
             <img src={ArrowWhite} />
           </Button>

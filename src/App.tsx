@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Step1 from './components/Steps/Step1'
-import Setup1 from './components/Steps/setup/SetupStep1'
-import Setup2 from './components/Steps/setup/SetupStep2'
+import Setup1 from './components/Steps/setup/SetupStep2'
+import Setup2 from './components/Steps/setup/SetupStep1'
 import Setup3 from './components/Steps/setup/SetupStep3'
 import Setup4 from './components/Steps/setup/SetupStep4'
 import Setup5 from './components/Steps/setup/SetupStep5'
@@ -48,8 +48,8 @@ function App() {
   return (
     <Main>
       {step === 0 && <Step1 nextStep={nextStep} />}
-      {step === 1 && <Setup1 nextStep={nextStep} previousStep={previousStep} setPathSD={setPathSD} pathSD={pathSD} />}
-      {step === 2 && <Setup2 nextStep={nextStep} previousStep={previousStep} />}
+      {step === 1 && <Setup2 nextStep={nextStep} previousStep={previousStep} />}
+      {step === 2 && <Setup1 nextStep={nextStep} previousStep={previousStep} setPathSD={setPathSD} pathSD={pathSD} />}
       {step === 3 && <Setup3 nextStep={nextStep} previousStep={previousStep} setJsonData={setJsonData} jsonData={jsonData} />}
       {step === 4 && <Setup4 nextStep={nextStep} previousStep={previousStep} jsonData={jsonData} pathSD={pathSD} />}
       {step === 5 && <Setup5 nextStep={nextStep} previousStep={previousStep} />}

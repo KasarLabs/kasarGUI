@@ -23,16 +23,20 @@ export const Button = styled.button`
   }
 `
 
+interface ButtonPrimeProps {
+  disabled?: boolean;
+}
 
-export const OutlineButton = styled.button`
+
+export const OutlineButton = styled.button<ButtonPrimeProps>`
   width: 100%;
   height: 73px;
   left: 49px;
-  background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+  background: ${({ disabled }) => (disabled ? '#D3D3D3' : 'linear-gradient(0deg, #FFFFFF, #FFFFFF)')};
   border-radius: 5px;
   border: 1px solid #EAEAEA;
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   color: #191919;
   display: flex;
   justify-content: space-between;
@@ -41,8 +45,12 @@ export const OutlineButton = styled.button`
   font-size: 20px;
   transition: 0.3s;
   &:hover {
-    color: white;
-    background: #2962D2;
+  ${({ disabled }) =>
+    !disabled &&
+    `
+      color: white;
+      background: #2962D2;
+    `
   }
 `
 
