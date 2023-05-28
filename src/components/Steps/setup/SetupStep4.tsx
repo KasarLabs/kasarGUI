@@ -6,7 +6,11 @@ import ArrowGray from '../../../assets/icons/ArrowGray.png'
 import SetupGif from '../../../assets/gif/setup.png'
 import { Input } from '@/components/s-components/Input'
 import { SpaceBetween } from '@/components/s-components/Flex'
-
+import { IJson } from '@/App'
+import fs from 'fs'
+import path from 'path'
+import usbDetect from 'usb-detection'
+import { useEffect } from 'react'
 
 const Image = styled.img`
   max-width: 180px;
@@ -44,9 +48,29 @@ const Block = styled.div`
 type PreviousStepProps = {
   nextStep: (num: number) => void;
   previousStep: () => void;
+  jsonData: IJson | undefined;
+  pathSD: string;
 }
 
-function Step4({ nextStep, previousStep }: PreviousStepProps) {
+function Step4({ nextStep, previousStep, jsonData, pathSD }: PreviousStepProps) {
+  useEffect(() => {
+    fs.writeFile(path.join(process.cwd(), 'output.json'), JSON.stringify(jsonData), 'utf8', function (err) {
+      if (err) {
+        console.log('error', err)
+      }
+      console.log('JSON has been saved')
+    })
+    const source = path.join(process.cwd(), 'output.json')
+    const destination = path.join(pathSD, 'output.json')
+    console.log('source', source)
+    console.log('destination', destination)
+    fs.rename(source, destination, function (err) {
+      if (err) {
+        console.log(err)
+      }
+      console.log('JSON moved successfully')
+    })
+  }, [])
   return (
     <Card>
       <Rows>

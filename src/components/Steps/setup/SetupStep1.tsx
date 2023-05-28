@@ -39,12 +39,13 @@ const Buttons = styled.div`
 type StepProps = {
   nextStep: (num: number) => void;
   previousStep: () => void;
+  setPathSD: (arg: string) => void;
+  pathSD: string;
 }
 
 
 
-function Step1({ nextStep, previousStep }: StepProps) {
-  const [pathSD, setPathSD] = useState('')
+function Step1({ nextStep, previousStep, setPathSD, pathSD }: StepProps) {
 
   const handleClick = () => {
     ipcRenderer.send('open-directory-dialog')

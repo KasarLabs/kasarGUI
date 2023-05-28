@@ -6,7 +6,6 @@ import Logo from '../../assets/kasar.jpg'
 import styled from 'styled-components'
 import ArrowGray from '../../assets/icons/ArrowGray.png'
 import ArrowWhite from '../../assets/icons/ArrowWhite.png'
-import axios from 'axios'
 import { config } from 'dotenv'
 
 config()
@@ -43,11 +42,7 @@ type StepProps = {
 }
 
 function Step1({ nextStep }: StepProps) {
-  useEffect(() => {
-    const ret = axios.get(`${process.env.SERVER_PUBLIC_API!}/test`).then(res => {
-      console.log(res)
-    })
-  }, [])
+
   return (
     <Card>
       <Rows>
