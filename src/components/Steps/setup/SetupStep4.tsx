@@ -62,21 +62,46 @@ function Step4({ nextStep, previousStep, jsonData, pathSD }: PreviousStepProps) 
     }
   }, [progress])
 
+  // useEffect(() => {
+  //   fs.writeFile(path.join(process.cwd(), 'config.json'), JSON.stringify(jsonData), 'utf8', function (err) {
+  //     if (err) {
+  //       console.log('error', err)
+  //     }
+  //   })
+  //   const source = path.join(process.cwd(), 'config.json')
+  //   const destination = path.join(pathSD, 'config.json')
+  //   fs.rename(source, destination, function (err) {
+  //     if (err) {
+  //       console.log(err)
+  //     }
+  //     console.log('JSON moved successfully')
+  //   })
+  // }, [])
+
   useEffect(() => {
-    fs.writeFile(path.join(process.cwd(), 'config.json'), JSON.stringify(jsonData), 'utf8', function (err) {
+    const source = path.join(process.cwd(), 'config.json');
+    const destination = path.join(pathSD, 'config.json');
+    fs.writeFile(source, JSON.stringify(jsonData), 'utf8', function (err) {
       if (err) {
-        console.log('error', err)
+        console.log('error', err);
+        return;  // return early if write failed       
       }
-    })
-    const source = path.join(process.cwd(), 'config.json')
-    const destination = path.join(pathSD, 'config.json')
-    fs.rename(source, destination, function (err) {
-      if (err) {
-        console.log(err)
-      }
-      console.log('JSON moved successfully')
-    })
-  }, [])
+      // Only try to move if write was successful       
+      fs.copyFile(source, destination, function (err) {
+        if (err) { console.log(err); } else {
+          console.log('JSON copied successfully');
+          // Delete original file if needed           
+          fs.unlink(source, function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('Original JSON deleted successfully');
+            }
+          });
+        }
+      });
+    });
+  }, []);
   return (
     <Card>
       <Rows>

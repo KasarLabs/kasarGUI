@@ -8,7 +8,6 @@ import { Input } from '@/components/s-components/Input'
 import { SpaceBetween } from '@/components/s-components/Flex'
 import { IJson } from '@/App'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 
 const Rows = styled.div`
