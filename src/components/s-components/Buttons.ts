@@ -45,19 +45,20 @@ export const OutlineButton = styled.button<ButtonPrimeProps>`
   font-size: 20px;
   transition: 0.3s;
   &:hover {
-  ${({ disabled }) =>
+    ${({ disabled }) =>
     !disabled &&
     `
-      color: white;
-      background: #2962D2;
-    `
+        color: white;
+        background: #2962D2;
+      `
+  }
   }
 `
 
-export const ButtonSmall = styled.button`
+export const ButtonSmall = styled.button<ButtonPrimeProps>`
   height: 42px;
   left: 49px;
-  background: #2962D2;
+  background: ${({ disabled }) => (disabled ? '#D3D3D3' : '#2962D2')};
   border-radius: 5px;
   border: none;
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
@@ -70,7 +71,12 @@ export const ButtonSmall = styled.button`
   font-size: 20px;
   transition: 0.3s;
   &:hover {
-    color: #191919;
-    background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+    ${({ disabled }) =>
+    !disabled &&
+    `
+        color: #191919;
+        background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+      `
+  }
   }
 `

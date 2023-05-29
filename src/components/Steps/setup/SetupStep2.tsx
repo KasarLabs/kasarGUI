@@ -75,7 +75,7 @@ function Step2({ nextStep, previousStep, setPathSD, pathSD }: StepProps) {
             Setup your micro SD storage
             <img src={ArrowGray} />
           </OutlineButton>
-          <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
+          {/* <ButtonSmall onClick={previousStep}>Prev</ButtonSmall> */}
         </Buttons>
       </Rows>
     </Card>

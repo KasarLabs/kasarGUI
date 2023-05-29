@@ -8,6 +8,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { SeparatorSM } from '@/components/s-components/utils'
 import Register from '@/components/Register'
+import { toast } from 'react-toastify';
 
 const Rows = styled.div`
   display: flex;
@@ -86,9 +87,10 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         password: password,
       });
       if (data.error) {
-        console.log(data.error)
+        toast.error(data.error)
       }
       if (data.success) {
+        toast.success('Congratulations, you are now registered!')
         setOk(data.on);
         setFirstName('');
         setLastName('');
@@ -98,7 +100,24 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         nextStep(9);
       }
     } catch (err) {
-      console.log(err)
+      //@ts-ignore
+      toast.error(err.response.data)
+      nextStep(0);
+    }
+  }
+
+  function isDisabledButton(step: number, firstName: string, lastName: string, userName: string, email: string, password: string) {
+    switch (step) {
+      case 1:
+        return !firstName || !lastName;
+      case 2:
+        return !userName;
+      case 3:
+        return !email;
+      case 4:
+        return !password;
+      default:
+        return false;
     }
   }
 
@@ -134,7 +153,7 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
             <Buttons>
               <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
             </Buttons>
-            <ButtonSmall onClick={() => setStep(step + 1)}>
+            <ButtonSmall disabled={isDisabledButton(step, firstName, lastName, userName, email, password)} onClick={() => setStep(step + 1)}>
               Next
             </ButtonSmall>
           </FlexRow>

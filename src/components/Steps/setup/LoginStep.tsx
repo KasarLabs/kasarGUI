@@ -7,6 +7,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { SeparatorSM } from '@/components/s-components/utils'
 import Login from '@/components/Login'
+import { toast } from 'react-toastify';
 
 const Rows = styled.div`
   display: flex;
@@ -72,12 +73,13 @@ function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProp
         password: password,
       });
       if (data.error) {
-        console.log(data.error)
+        toast.error(data.error)
       } else {
         setState({
           user: data.user,
           token: data.token
         });
+        toast.success('User Logged in')
         nextStep(2);
       }
     } catch (err) {
