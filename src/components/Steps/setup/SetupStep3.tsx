@@ -43,7 +43,8 @@ const Selector = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 50%;
+  left: 00%;
+  top:25%;
   width: 200px;
   background-color: #FFF;
   border: none;
@@ -72,7 +73,7 @@ const ClientButton = styled.button`
   height: 57px;
   font-weight: 400;
   font-size: 16px;
-  color: #ADADAD;
+  color: black;
   padding: 0 20px;
   cursor: pointer;
   display: flex;

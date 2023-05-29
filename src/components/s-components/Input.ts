@@ -9,6 +9,6 @@ export const Input = styled.input`
   height: 57px;
   font-weight: 400;
   font-size: 16px;
-  color: #ADADAD;
+  color: black;
   padding: 0 20px;
 `
