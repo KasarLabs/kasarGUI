@@ -86,7 +86,7 @@ function Step4({ nextStep, previousStep, jsonData, pathSD }: PreviousStepProps) 
             4. Give your Starknode a moment to setup
           </TextGray>
         </Row>
-        <LineProgressBar percent={progress} />
+        <LineProgressBar percent={progress} height={30} rounded={5} progressColor='#2962D2)' />
         <Inputs>
           <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
         </Inputs>
