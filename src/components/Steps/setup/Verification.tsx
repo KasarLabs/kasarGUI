@@ -5,6 +5,8 @@ import { Gradient, H1, TextGray } from '../../s-components/Texts'
 import Logo from '../../../assets/kasar.jpg'
 import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
+import { BsTelegram, BsTwitter, BsGithub } from 'react-icons/bs';
+import { shell } from 'electron'
 
 const Image = styled.img`
   width: 61px;
@@ -24,6 +26,13 @@ const Row = styled.div`
   p {
     text-align: center;
   }
+`
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
 `
 
 const Buttons = styled.div`
@@ -48,6 +57,15 @@ function Verification({ nextStep }: StepProps) {
           <TextGray>
             You have received an email. Please check your email (spam)
           </TextGray>
+        </Row>
+        <Row>
+          <TextGray>
+            If you didn't receive an email, please contact support:
+          </TextGray>
+          <Flex>
+            <BsTwitter style={{ cursor: 'pointer' }} onClick={() => shell.openExternal('https://twitter.com/kasarlabs')} size={30} />
+            <BsTelegram style={{ cursor: 'pointer' }} onClick={() => shell.openExternal('https://t.me/+jZZuOamlUM5lNWNk')} size={30} />
+          </Flex>
         </Row>
 
         <Buttons>
