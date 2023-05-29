@@ -62,7 +62,7 @@ export const ButtonSmall = styled.button<ButtonPrimeProps>`
   border-radius: 5px;
   border: none;
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   color: white;
   display: flex;
   justify-content: space-between;

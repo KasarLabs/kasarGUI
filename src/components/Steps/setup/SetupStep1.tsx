@@ -148,21 +148,21 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         />
 
         <SeparatorSM />
-        {step === 1 || step === 2 || step === 3 || step === 4 ?
+        {step === 1 || step === 2 || step === 3 ?
           <FlexRow>
             <Buttons>
-              <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
+              <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
             </Buttons>
-            <ButtonSmall disabled={isDisabledButton(step, firstName, lastName, userName, email, password)} onClick={() => setStep(step + 1)}>
+            <ButtonSmall type='button' disabled={isDisabledButton(step, firstName, lastName, userName, email, password)} onClick={() => setStep(step + 1)}>
               Next
             </ButtonSmall>
           </FlexRow>
           :
           <FlexRow>
             <Buttons>
-              <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
+              <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
             </Buttons>
-            <ButtonSmall type='submit' form='auth' value='Submit'>
+            <ButtonSmall type='button' form='auth' value='Submit' onClick={handleSubmit}>
               Submit
             </ButtonSmall>
           </FlexRow>

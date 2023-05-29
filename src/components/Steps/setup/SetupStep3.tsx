@@ -32,12 +32,52 @@ const Inputs = styled.div`
   flex-direction: column;
   gap: 15px;
   width: 100%;
-
 `
 
 const Block = styled.div`
   display: flex;
   flex-direction: column;
+`
+
+const Selector = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  width: 200px;
+  background-color: #FFF;
+  border: none;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+`
+
+const Client = styled.div`
+  transition: 0.2s;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #2962D2;
+    p {
+      color: black;
+    }
+  }
+`
+
+const ClientButton = styled.button`
+  background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+  border: 1px solid #EAEAEA;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  height: 57px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #ADADAD;
+  padding: 0 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 `
 
 type PreviousStepProps = {
@@ -51,8 +91,9 @@ type PreviousStepProps = {
 
 function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: PreviousStepProps) {
   const [nameNode, setName] = useState('')
-  const [client, setClient] = useState('')
+  const [client, setClient] = useState('Pathfinder')
   const [rpc, setRpc] = useState('')
+  const [open, setOpen] = useState(false)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -72,6 +113,16 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: Previou
     }
   }
 
+  const selectClient = () => {
+    setClient('Pathfinder')
+    setOpen(!open)
+  }
+
+  function isDisabledButton(nameNode: string, client: string, rpc: string) {
+    if (!nameNode || !client || !rpc)
+      return true
+    return false;
+  }
   return (
     <Card>
       <Rows>
@@ -87,9 +138,18 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: Previou
               <Text>Node name</Text>
               <Input value={nameNode} onChange={e => setName(e.target.value)} placeholder='Enter a name' />
             </Block>
-            <Block>
+            <Block style={{ position: 'relative' }} >
               <Text>Client</Text>
-              <Input value={client} onChange={e => setClient(e.target.value)} placeholder='Enter a client' />
+              <ClientButton type='button' onClick={() => setOpen(!open)}>{client}</ClientButton>
+              {open &&
+                <Selector onClick={selectClient}>
+                  <Client>
+                    <TextGray>
+                      Pathfinder
+                    </TextGray>
+                  </Client>
+                </Selector>
+              }
             </Block>
             <Block>
               <Text>Ethereum RPC url</Text>
@@ -98,7 +158,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: Previou
           </Inputs>
         </form>
         <SpaceBetween>
-          <ButtonSmall type='submit' form='auth'>Submit</ButtonSmall>
+          <ButtonSmall disabled={isDisabledButton(nameNode, client, rpc)} type='submit' form='auth'>Submit</ButtonSmall>
         </SpaceBetween>
       </Rows>
     </Card>

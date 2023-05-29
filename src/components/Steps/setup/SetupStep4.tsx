@@ -46,9 +46,10 @@ type PreviousStepProps = {
   previousStep: () => void;
   jsonData: IJson | undefined;
   pathSD: string;
+  setPathSD: (arg: string) => void;
 }
 
-function Step4({ nextStep, previousStep, jsonData, pathSD }: PreviousStepProps) {
+function Step4({ nextStep, previousStep, jsonData, pathSD, setPathSD }: PreviousStepProps) {
   const [progress, setProgress] = useState(0)
   useEffect(() => {
     if (progress < 100) {
@@ -61,22 +62,6 @@ function Step4({ nextStep, previousStep, jsonData, pathSD }: PreviousStepProps) 
       nextStep(5)
     }
   }, [progress])
-
-  // useEffect(() => {
-  //   fs.writeFile(path.join(process.cwd(), 'config.json'), JSON.stringify(jsonData), 'utf8', function (err) {
-  //     if (err) {
-  //       console.log('error', err)
-  //     }
-  //   })
-  //   const source = path.join(process.cwd(), 'config.json')
-  //   const destination = path.join(pathSD, 'config.json')
-  //   fs.rename(source, destination, function (err) {
-  //     if (err) {
-  //       console.log(err)
-  //     }
-  //     console.log('JSON moved successfully')
-  //   })
-  // }, [])
 
   useEffect(() => {
     const source = path.join(process.cwd(), 'config.json');
@@ -100,6 +85,7 @@ function Step4({ nextStep, previousStep, jsonData, pathSD }: PreviousStepProps) 
           });
         }
       });
+      setPathSD('')
     });
   }, []);
   return (

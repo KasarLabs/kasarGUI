@@ -52,7 +52,6 @@ function Step2({ nextStep, previousStep, setPathSD, pathSD }: StepProps) {
   }
 
   ipcRenderer.on('selected-directory', (event, path) => {
-    console.log(path)
     setPathSD(path)
   })
 
