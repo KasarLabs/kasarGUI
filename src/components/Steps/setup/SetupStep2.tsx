@@ -3,12 +3,12 @@ import { Card } from '../../s-components/Card'
 import { H1, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
-import SetupGif from '../../../assets/gif/setup.png'
+import SetupGif from '../../../assets/gif/laptop.gif'
 import { ipcRenderer } from 'electron'
 import { useEffect, useState } from 'react'
 
 const Image = styled.img`
-  max-width: 180px;
+  width: 70%;
 `
 
 const Rows = styled.div`
@@ -17,6 +17,7 @@ const Rows = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  gap: 10px;
 `
 
 const Row = styled.div`
@@ -33,6 +34,13 @@ const Buttons = styled.div`
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  width: 100%;
+`
+
+const FlexRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
 `
 
@@ -55,9 +63,19 @@ function Step2({ nextStep, previousStep, setPathSD, pathSD }: StepProps) {
     setPathSD(path)
   })
 
-  useEffect(() => {
-    if (pathSD) nextStep(3)
-  }, [pathSD])
+  // useEffect(() => {
+  //   if (pathSD) nextStep(3)
+  // }, [pathSD])
+
+  const confirmClick = () => {
+    nextStep(3)
+  }
+
+  function isDisabledButton(pathSD: string) {
+    if (!pathSD)
+      return true
+    return false;
+  }
   return (
     <Card>
       <Rows>
@@ -68,7 +86,9 @@ function Step2({ nextStep, previousStep, setPathSD, pathSD }: StepProps) {
           </TextGray>
         </Row>
         <Image src={SetupGif} alt='setup starknode' />
-
+        <TextGray>
+          Your path: {pathSD}
+        </TextGray>
         <Buttons>
           <OutlineButton onClick={handleClick}>
             Setup your micro SD storage
@@ -76,6 +96,12 @@ function Step2({ nextStep, previousStep, setPathSD, pathSD }: StepProps) {
           </OutlineButton>
           {/* <ButtonSmall onClick={previousStep}>Prev</ButtonSmall> */}
         </Buttons>
+        <FlexRow>
+          <ButtonSmall type='button' onClick={() => nextStep(8)}>Prev</ButtonSmall>
+          <ButtonSmall disabled={isDisabledButton(pathSD)} type='button' form='auth' value='Submit' onClick={confirmClick}>
+            Next
+          </ButtonSmall>
+        </FlexRow>
       </Rows>
     </Card>
   )

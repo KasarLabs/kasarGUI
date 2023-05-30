@@ -56,8 +56,8 @@ export const OutlineButton = styled.button<ButtonPrimeProps>`
 `
 
 export const ButtonSmall = styled.button<ButtonPrimeProps>`
-  height: 42px;
-  left: 49px;
+  height: 54px;
+  width: 125px;
   background: ${({ disabled }) => (disabled ? '#D3D3D3' : '#2962D2')};
   border-radius: 5px;
   border: none;
@@ -65,9 +65,9 @@ export const ButtonSmall = styled.button<ButtonPrimeProps>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   color: white;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 5px 22px;
+  justify-content: center;
+  padding: 22px;
   font-size: 20px;
   transition: 0.3s;
   &:hover {

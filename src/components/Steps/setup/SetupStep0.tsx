@@ -43,16 +43,15 @@ function SetupStep0({ nextStep, previousStep }: PreviousStepProps) {
       <Rows>
         <Row>
           <Image src={Logo} alt='starknode' />
-          <H1>Welcome to <Gradient>Osiris</Gradient></H1>
+          <H1>Welcome to <Gradient>Kasar</Gradient></H1>
           <TextGray>
-            Let’s guide you through the process of setting
-            up or updating your Starknode.
+            Please login to access your account or register if you're new here.
           </TextGray>
         </Row>
 
         <Buttons>
           <OutlineButton onClick={() => nextStep(1)}>
-            Register
+            Sign up
             <img src={ArrowGray} />
           </OutlineButton>
           <OutlineButton onClick={() => nextStep(8)}>

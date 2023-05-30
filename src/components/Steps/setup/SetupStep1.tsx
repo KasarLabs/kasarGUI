@@ -1,6 +1,6 @@
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, TextGray, Text } from '../../s-components/Texts'
+import { H1, TextGray, Gradient } from '../../s-components/Texts'
 import styled from 'styled-components'
 import { Input } from '@/components/s-components/Input'
 import { shell } from 'electron';
@@ -9,12 +9,15 @@ import axios from 'axios'
 import { SeparatorSM } from '@/components/s-components/utils'
 import Register from '@/components/Register'
 import { toast } from 'react-toastify';
+import { SERVER_PUBLIC_API } from '@/constants'
+import { TailSpin } from 'react-loader-spinner'
 
 const Rows = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: 100%;
 `
 
 const Row = styled.div`
@@ -24,6 +27,8 @@ const Row = styled.div`
   p {
     text-align: center;
   }
+  width: 100%;
+
 `
 
 const Buttons = styled.div`
@@ -66,7 +71,6 @@ const Span = styled.span`
 
 
 function Step1({ nextStep, previousStep }: PreviousStepProps) {
-  const [userExist, setUserExist] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
@@ -74,12 +78,14 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
   const [password, setPassword] = useState('');
   const [ok, setOk] = useState(false);
   const [step, setStep] = useState(1)
+  const [verifyPass, setVerifyPass] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    setLoading(true)
     try {
-      const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/register`, {
+      const { data } = await axios.post(`${SERVER_PUBLIC_API}/register`, {
         firstName: firstName,
         lastName: lastName,
         userName: userName,
@@ -87,9 +93,11 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         password: password,
       });
       if (data.error) {
+        setLoading(false)
         toast.error(data.error)
       }
       if (data.success) {
+        setLoading(false)
         toast.success('Congratulations, you are now registered!')
         setOk(data.on);
         setFirstName('');
@@ -102,6 +110,7 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
     } catch (err) {
       //@ts-ignore
       toast.error(err.response.data)
+      setLoading(false)
       nextStep(0);
     }
   }
@@ -114,20 +123,34 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         return !userName;
       case 3:
         return !email;
-      case 4:
-        return !password;
       default:
         return false;
     }
+  }
+
+  function isDisabledButtonSubmit(step: number, password: string, verifyPass: string) {
+    if (step === 4) {
+      if (!password) {
+        return true
+      }
+      if (!verifyPass) {
+        return true
+      }
+      if (password !== verifyPass) {
+        return true
+      }
+      return false
+    }
+    return false
   }
 
   return (
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
+          <H1>Setup my <Gradient>Starknode</Gradient></H1>
           <TextGray>
-            2. Register
+            2. Sign up
           </TextGray>
         </Row>
 
@@ -145,6 +168,8 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
           setUserName={setUserName}
           setStep={setStep}
           step={step}
+          setVerifyPass={setVerifyPass}
+          verifyPass={verifyPass}
         />
 
         <SeparatorSM />
@@ -162,8 +187,20 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
             <Buttons>
               <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
             </Buttons>
-            <ButtonSmall type='button' form='auth' value='Submit' onClick={handleSubmit}>
+            <ButtonSmall disabled={isDisabledButtonSubmit(step, password, verifyPass)} type='button' form='auth' value='Submit' onClick={handleSubmit}>
               Submit
+              {loading &&
+                <TailSpin
+                  height="20"
+                  width="20"
+                  color="#fff"
+                  ariaLabel="tail-spin-loading"
+                  radius="2"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              }
             </ButtonSmall>
           </FlexRow>
         }

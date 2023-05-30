@@ -13,11 +13,13 @@ const Inputs = styled.div`
 const Block = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `
 
 const FlexRow = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   gap: 10px;
 `
@@ -36,6 +38,8 @@ export interface IRegister {
   setUserName: (e: string) => void;
   setStep: (e: number) => void;
   step: number;
+  setVerifyPass: (e: string) => void;
+  verifyPass: string;
 }
 
 
@@ -52,8 +56,15 @@ function Register({
   userName,
   setUserName,
   setStep,
-  step
+  step,
+  setVerifyPass,
+  verifyPass
 }: IRegister) {
+
+
+  const checkPassword = () => {
+
+  }
   return (
     <form onSubmit={handleSubmit} id='auth'>
       <Inputs>
@@ -82,10 +93,17 @@ function Register({
           </Block>
         }
         {step === 4 &&
-          <Block>
-            <Text>Password</Text>
-            <Input value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter a password' />
-          </Block>
+          <FlexRow>
+
+            <Block>
+              <Text>Password</Text>
+              <Input value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter a password' />
+            </Block>
+            <Block>
+              <Text>Verify your password</Text>
+              <Input value={verifyPass} onChange={e => setVerifyPass(e.target.value)} type='password' placeholder='Enter password again' />
+            </Block>
+          </FlexRow>
         }
       </Inputs>
     </form>

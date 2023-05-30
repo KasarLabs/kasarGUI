@@ -49,7 +49,7 @@ function Step1({ nextStep }: StepProps) {
       <Rows>
         <Row>
           <Image src={Logo} alt='starknode' />
-          <H1>Welcome to <Gradient>Osiris</Gradient></H1>
+          <H1>Welcome to <Gradient>Kasar</Gradient></H1>
           <TextGray>
             Let’s guide you through the process of setting
             up or updating your Starknode.

@@ -1,19 +1,21 @@
 
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, TextGray, Text } from '../../s-components/Texts'
+import { H1, TextGray, Text, Gradient } from '../../s-components/Texts'
 import styled from 'styled-components'
 import { useState } from 'react'
 import axios from 'axios'
 import { SeparatorSM } from '@/components/s-components/utils'
 import Login from '@/components/Login'
 import { toast } from 'react-toastify';
+import { SERVER_PUBLIC_API } from '@/constants'
 
 const Rows = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: 100%;
 `
 
 const Row = styled.div`
@@ -68,7 +70,7 @@ function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProp
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/login`, {
+      const { data } = await axios.post(`${SERVER_PUBLIC_API}/login`, {
         email: email,
         password: password,
       });
@@ -90,9 +92,9 @@ function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProp
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
+          <H1>Log in to <Gradient>Kasar</Gradient></H1>
           <TextGray>
-            2. Register
+            Please, enter your email and password.
           </TextGray>
         </Row>
 

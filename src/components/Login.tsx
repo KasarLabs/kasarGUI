@@ -37,6 +37,7 @@ const Inputs = styled.div`
 const Block = styled.div`
   display: flex;
   flex-direction: column;
+width: 100%;
 `
 
 const FlexRow = styled.div`

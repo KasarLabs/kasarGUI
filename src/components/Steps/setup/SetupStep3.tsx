@@ -9,6 +9,7 @@ import { SpaceBetween } from '@/components/s-components/Flex'
 import { IJson } from '@/App'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import axios from 'axios'
+import { SERVER_PUBLIC_API } from '@/constants'
 
 const Rows = styled.div`
   display: flex;
@@ -99,7 +100,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: Previou
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${process.env.SERVER_PUBLIC_API!}/getTokenOfUser`, {
+      const { data } = await axios.post(`${SERVER_PUBLIC_API}/getTokenOfUser`, {
         email: email,
       });
       if (data.error) {
@@ -159,6 +160,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: Previou
           </Inputs>
         </form>
         <SpaceBetween>
+          <div />
           <ButtonSmall disabled={isDisabledButton(nameNode, client, rpc)} type='submit' form='auth'>Submit</ButtonSmall>
         </SpaceBetween>
       </Rows>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const H1 = styled.h1`
   font-weight: 700;
-  font-size: 24px;
+  font-size: 32px;
 `
 
 export const Gradient = styled.span`
