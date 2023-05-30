@@ -55,7 +55,7 @@ function Step4({ nextStep, previousStep, jsonData, pathSD, setPathSD }: Previous
     if (progress < 100) {
       const timer = setInterval(() => {
         setProgress(progress => progress + 1)
-      }, 80)
+      }, 50)
       return () => clearInterval(timer)
     }
     if (progress === 100) {
