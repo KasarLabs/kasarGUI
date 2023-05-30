@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Button, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { Gradient, H1, TextGray } from '../../s-components/Texts'
+import { Gradient, H2, H1, TextGray } from '../../s-components/Texts'
 import Logo from '../../../assets/kasar.jpg'
 import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
@@ -53,7 +53,7 @@ function Verification({ nextStep }: StepProps) {
       <Rows>
         <Row>
           <Image src={Logo} alt='starknode' />
-          <H1>Thank you for registering</H1>
+          <H2>Thank you for registering</H2>
           <TextGray>
             You have received an email. Please check your email (spam)
           </TextGray>

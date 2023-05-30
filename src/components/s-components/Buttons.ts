@@ -34,7 +34,7 @@ export const OutlineButton = styled.button<ButtonPrimeProps>`
   left: 49px;
   background: ${({ disabled }) => (disabled ? '#D3D3D3' : 'linear-gradient(0deg, #FFFFFF, #FFFFFF)')};
   border-radius: 5px;
-  border: 1px solid #EAEAEA;
+  border: none;
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   color: #191919;

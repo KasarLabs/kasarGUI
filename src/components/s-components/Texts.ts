@@ -6,6 +6,11 @@ export const H1 = styled.h1`
   font-size: 32px;
 `
 
+export const H2 = styled.h1`
+  font-weight: 700;
+  font-size: 26px;
+`
+
 export const Gradient = styled.span`
   background: linear-gradient(to right, #338CF5, #4FD1C5);
   -webkit-background-clip: text;
