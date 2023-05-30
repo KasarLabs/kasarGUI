@@ -88,10 +88,11 @@ type PreviousStepProps = {
   setJsonData: Dispatch<SetStateAction<IJson | undefined>>;
   jsonData: IJson | undefined;
   email: string;
+  setUuid: (num: string) => void;
 }
 
 
-function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: PreviousStepProps) {
+function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }: PreviousStepProps) {
   const [nameNode, setName] = useState('')
   const [client, setClient] = useState('Pathfinder')
   const [rpc, setRpc] = useState('')
@@ -108,6 +109,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email }: Previou
       }
       if (nameNode && client && rpc && data) {
         setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.message })
+        setUuid(data.message)
         nextStep(4)
       }
     } catch (err) {

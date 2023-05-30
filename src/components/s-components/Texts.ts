@@ -30,3 +30,10 @@ export const TextGray = styled.p`
   margin: 0;
   color: #666666;
 `
+
+export const TextGraySM = styled.p`
+  font-weight: 400;
+  font-size: 12px;
+  margin: 0;
+  color: #666666;
+`

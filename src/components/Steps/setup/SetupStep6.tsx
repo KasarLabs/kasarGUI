@@ -12,6 +12,8 @@ import { SpaceBetween } from '@/components/s-components/Flex'
 import { useEffect } from 'react'
 import confetti from 'canvas-confetti'
 import { Separator } from '@/components/s-components/utils'
+import axios from 'axios'
+import { SERVER_NODE_API } from '@/constants'
 
 const Image = styled.img`
   max-width: 180px;
@@ -50,28 +52,29 @@ const Block = styled.div`
 type PreviousStepProps = {
   nextStep: (num: number) => void;
   previousStep: () => void;
+  uuid: string;
 }
 
-function Step6({ nextStep, previousStep }: PreviousStepProps) {
-
+function Step6({ nextStep, previousStep, uuid }: PreviousStepProps) {
   useEffect(() => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
+    const callNode = async () => {
+      const { data } = await axios.post(`${SERVER_NODE_API}/node/getAllOf?provider_id=${uuid}`, {
+      });
+      console.log(data)
+    }
+    callNode()
   }, [])
   return (
     <Card>
       <Rows>
         <Row>
-          <H1>Congratulations</H1>
-          <Text>Installation is complete!</Text>
+          <H1>Fetching your node(s)</H1>
+          <Text>Please wait, synchronization is in progress...</Text>
         </Row>
         <Separator />
-        <Inputs>
+        {/* <Inputs>
           <ButtonSmall onClick={() => nextStep(-1)}>Home</ButtonSmall>
-        </Inputs>
+        </Inputs> */}
       </Rows>
     </Card>
   )

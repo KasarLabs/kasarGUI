@@ -1,8 +1,9 @@
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, Text, TextGray } from '../../s-components/Texts'
+import { H1, TextGraySM, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
 import SetupGif from '../../../assets/gif/board.gif'
+import { Separator, SeparatorSM } from '@/components/s-components/utils'
 
 
 const Rows = styled.div`
@@ -20,6 +21,15 @@ const Row = styled.div`
   align-items: center;
   p {
     text-align: center;
+  }
+`
+
+const RowStep = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+p {
+    text-align: start;
   }
 `
 
@@ -53,16 +63,22 @@ function Step5({ nextStep, previousStep }: PreviousStepProps) {
         <Row>
           <H1>Setup my starknode</H1>
           <TextGray>
-            6. Wait for your Starknode to be detected by your network.
-            Please do not unplug the device!
+            6. Follow these steps:
           </TextGray>
         </Row>
-        <Image onClick={() => nextStep(6)} src={SetupGif} alt='setup starknode' />
-
-        {/* <Button onClick={() => nextStep(7)}>Loading</Button> */}
-        {/* <Inputs>
-          <ButtonSmall onClick={previousStep}>Prev</ButtonSmall>
-        </Inputs> */}
+        <RowStep>
+          <TextGraySM>
+            1. Remove the micro SD card from your computer.<br />
+            2. Insert the micro SD card into your starknode.<br />
+            3. Connect your starknode to the ethernet.<br />
+            4. Plug your starknode to a power source.<br />
+            5. Click "Next" when you have completed these steps.<br />
+          </TextGraySM>
+        </RowStep>
+        <Image src={SetupGif} alt='setup starknode' />
+        <Inputs>
+          <ButtonSmall onClick={() => nextStep(6)}>Next</ButtonSmall>
+        </Inputs>
       </Rows>
     </Card>
   )
