@@ -15,6 +15,7 @@ import UpdateStep4 from './components/Steps/update/UpdateStep4'
 import { useState } from 'react'
 import LoginStep from './components/Steps/setup/LoginStep'
 import Verification from './components/Steps/setup/Verification'
+import ResetPassword from './components/ResetPassword'
 
 
 const Main = styled.div`
@@ -69,7 +70,7 @@ function App() {
       {step === 13 && <UpdateStep3 nextStep={nextStep} previousStep={previousStep} />}
       {step === 14 && <UpdateStep4 nextStep={nextStep} previousStep={previousStep} />}
       {step === 9 && <Verification nextStep={nextStep} />}
-
+      {step === 10 && <ResetPassword nextStep={nextStep} previousStep={previousStep} setEmail={setEmail} email={email} />}
     </Main>
   )
 }

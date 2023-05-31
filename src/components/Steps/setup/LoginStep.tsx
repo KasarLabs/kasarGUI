@@ -106,6 +106,7 @@ function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProp
           setPassword={setPassword}
         />
 
+        <TextGray>Forgot your password? Please click <span style={{ cursor: 'pointer', color: '#2969D2' }} onClick={() => nextStep(10)}>here</span></TextGray>
         <SeparatorSM />
 
         <FlexRow>

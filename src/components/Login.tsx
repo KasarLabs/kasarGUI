@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Input } from '@/components/s-components/Input'
-import { Text } from './s-components/Texts'
+import { Text, TextGray } from './s-components/Texts'
 
 const Rows = styled.div`
   display: flex;
