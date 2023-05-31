@@ -15,10 +15,6 @@ import { Separator } from '@/components/s-components/utils'
 import axios from 'axios'
 import { SERVER_NODE_API } from '@/constants'
 
-const Image = styled.img`
-  max-width: 180px;
-`
-
 const Rows = styled.div`
   display: flex;
   flex-direction: column;

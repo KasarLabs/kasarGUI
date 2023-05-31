@@ -62,9 +62,6 @@ function Register({
 }: IRegister) {
 
 
-  const checkPassword = () => {
-
-  }
   return (
     <form onSubmit={handleSubmit} id='auth'>
       <Inputs>
@@ -78,23 +75,21 @@ function Register({
               <Text>Last name</Text>
               <Input value={lastName} onChange={e => setLastName(e.target.value)} placeholder='Enter your last name' />
             </Block>
+            <Block>
+              <Text>Username</Text>
+              <Input value={userName} onChange={e => setUserName(e.target.value)} placeholder='Enter your username' />
+            </Block>
           </FlexRow>
         }
+
         {step === 2 &&
-          <Block>
-            <Text>Username</Text>
-            <Input value={userName} onChange={e => setUserName(e.target.value)} placeholder='Enter your username' />
-          </Block>
-        }
-        {step === 3 &&
           <Block>
             <Text>Mail</Text>
             <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email' />
           </Block>
         }
-        {step === 4 &&
+        {step === 3 &&
           <FlexRow>
-
             <Block>
               <Text>Password</Text>
               <Input value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter a password' />

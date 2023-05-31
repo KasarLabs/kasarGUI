@@ -118,10 +118,8 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
   function isDisabledButton(step: number, firstName: string, lastName: string, userName: string, email: string, password: string) {
     switch (step) {
       case 1:
-        return !firstName || !lastName;
+        return !firstName || !lastName || !userName;
       case 2:
-        return !userName;
-      case 3:
         return !email;
       default:
         return false;
@@ -129,7 +127,7 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
   }
 
   function isDisabledButtonSubmit(step: number, password: string, verifyPass: string) {
-    if (step === 4) {
+    if (step === 3) {
       if (!password) {
         return true
       }
@@ -149,9 +147,22 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
       <Rows>
         <Row>
           <H1>Setup my <Gradient>Starknode</Gradient></H1>
-          <TextGray>
-            2. Sign up
-          </TextGray>
+
+          {step === 1 &&
+            <TextGray>
+              2. Please enter your first name, last name and username.
+            </TextGray>
+          }
+          {step === 2 &&
+            <TextGray>
+              2. Please enter your email
+            </TextGray>
+          }
+          {step === 3 &&
+            <TextGray>
+              2. Please enter a password (min 6 characters)
+            </TextGray>
+          }
         </Row>
 
         <Register
@@ -173,7 +184,7 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         />
 
         <SeparatorSM />
-        {step === 1 || step === 2 || step === 3 ?
+        {step === 1 || step === 2 ?
           <FlexRow>
             <Buttons>
               <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
@@ -187,9 +198,8 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
             <Buttons>
               <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
             </Buttons>
-            <ButtonSmall disabled={isDisabledButtonSubmit(step, password, verifyPass)} type='button' form='auth' value='Submit' onClick={handleSubmit}>
-              Submit
-              {loading &&
+            {loading ?
+              <ButtonSmall disabled={isDisabledButtonSubmit(step, password, verifyPass)} type='button' form='auth' value='Submit' onClick={handleSubmit}>
                 <TailSpin
                   height="20"
                   width="20"
@@ -200,8 +210,12 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
                   wrapperClass=""
                   visible={true}
                 />
-              }
-            </ButtonSmall>
+              </ButtonSmall>
+              :
+              <ButtonSmall disabled={isDisabledButtonSubmit(step, password, verifyPass)} type='button' form='auth' value='Submit' onClick={handleSubmit}>
+                Submit
+              </ButtonSmall>
+            }
           </FlexRow>
         }
       </Rows>

@@ -8,6 +8,7 @@ import { SpaceBetween } from '@/components/s-components/Flex'
 
 const Image = styled.img`
   max-width: 180px;
+  border-radius: 5px;
 `
 
 const Rows = styled.div`

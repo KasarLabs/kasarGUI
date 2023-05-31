@@ -1,6 +1,6 @@
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, Text, TextGray } from '../../s-components/Texts'
+import { Gradient, H1, Text, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
 import SetupGif from '../../../assets/gif/setup.png'
@@ -131,7 +131,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
+          <H1>Setup my <Gradient>Starknode</Gradient></H1>
           <TextGray>
             3. Next, configure your device
           </TextGray>
@@ -162,7 +162,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
           </Inputs>
         </form>
         <SpaceBetween>
-          <div />
+          <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
           <ButtonSmall disabled={isDisabledButton(nameNode, client, rpc)} type='submit' form='auth'>Submit</ButtonSmall>
         </SpaceBetween>
       </Rows>

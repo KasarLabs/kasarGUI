@@ -1,16 +1,12 @@
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, Text, TextGray } from '../../s-components/Texts'
+import { Gradient, H1, Text, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
 import { IJson } from '@/App'
 import fs from 'fs'
 import path from 'path'
 import { useEffect, useState } from 'react'
 import { LineProgressBar } from '@frogress/line'
-
-const Image = styled.img`
-  max-width: 180px;
-`
 
 const Rows = styled.div`
   display: flex;
@@ -92,7 +88,7 @@ function Step4({ nextStep, previousStep, jsonData, pathSD, setPathSD }: Previous
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
+          <H1>Setup my <Gradient>Starknode</Gradient></H1>
           <TextGray>
             4. Give your Starknode a moment to setup
           </TextGray>

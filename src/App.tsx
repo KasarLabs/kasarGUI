@@ -62,7 +62,7 @@ function App() {
       {step === 3 && <Setup3 nextStep={nextStep} previousStep={previousStep} setUuid={setUuid} setJsonData={setJsonData} jsonData={jsonData} email={email} />}
       {step === 4 && <Setup4 nextStep={nextStep} previousStep={previousStep} jsonData={jsonData} pathSD={pathSD} setPathSD={setPathSD} />}
       {step === 5 && <Setup5 nextStep={nextStep} previousStep={previousStep} />}
-      {step === 6 && <Setup6 nextStep={nextStep} previousStep={previousStep} uuid={uuid} />}
+      {step === 6 && <Setup6 nextStep={nextStep} previousStep={previousStep} uuid={uuid} jsonData={jsonData} />}
       {step === 7 && <Setup7 nextStep={nextStep} previousStep={previousStep} />}
       {step === 11 && <UpdateStep1 nextStep={nextStep} previousStep={previousStep} />}
       {step === 12 && <UpdateStep2 nextStep={nextStep} previousStep={previousStep} />}

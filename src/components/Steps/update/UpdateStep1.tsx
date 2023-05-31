@@ -6,11 +6,6 @@ import Logo from '../../../assets/kasar.jpg'
 import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
 
-const Image = styled.img`
-  width: 61px;
-  height: 61px;  
-`
-
 const Rows = styled.div`
   display: flex;
   flex-direction: column;

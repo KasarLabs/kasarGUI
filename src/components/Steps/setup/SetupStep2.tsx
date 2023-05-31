@@ -1,6 +1,6 @@
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, TextGray } from '../../s-components/Texts'
+import { Gradient, H1, TextGray } from '../../s-components/Texts'
 import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
 import SetupGif from '../../../assets/gif/laptop.gif'
@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react'
 
 const Image = styled.img`
   width: 70%;
+  border-radius: 5px;
+
 `
 
 const Rows = styled.div`
@@ -80,14 +82,14 @@ function Step2({ nextStep, previousStep, setPathSD, pathSD }: StepProps) {
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
+          <H1>Setup my <Gradient>Starknode</Gradient></H1>
           <TextGray>
             1. Please connect your Micro SD card to your computer using the USB to microSD flasher
           </TextGray>
         </Row>
         <Image src={SetupGif} alt='setup starknode' />
         <TextGray>
-          Your path: {pathSD}
+          Selected path: {pathSD}
         </TextGray>
         <Buttons>
           <OutlineButton onClick={handleClick}>

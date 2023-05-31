@@ -3,7 +3,7 @@
 
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, Text, TextGray } from '../../s-components/Texts'
+import { Gradient, H1, Text, TextGray, TextGraySM } from '../../s-components/Texts'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
@@ -11,6 +11,7 @@ import { Separator, SeparatorSM } from '@/components/s-components/utils'
 import axios from 'axios'
 import { SERVER_NODE_API } from '@/constants'
 import { TailSpin } from 'react-loader-spinner'
+import { IJson } from '@/App'
 
 const Rows = styled.div`
   display: flex;
@@ -18,7 +19,6 @@ const Rows = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-
   height: 100%;
 `
 
@@ -52,10 +52,11 @@ type PreviousStepProps = {
   nextStep: (num: number) => void;
   previousStep: () => void;
   uuid: string;
+  jsonData: IJson | undefined;
 }
 
-function Step6({ nextStep, previousStep, uuid }: PreviousStepProps) {
-  const [loading, setLoading] = useState(false)
+function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
+  const [loading, setLoading] = useState(true)
   const [nodes, setNodes] = useState([])
 
   useEffect(() => {
@@ -75,11 +76,20 @@ function Step6({ nextStep, previousStep, uuid }: PreviousStepProps) {
     return () => clearInterval(intervalId); // Clean up the interval on unmount
   }, [uuid]);
 
+  useEffect(() => {
+    if (!loading) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+  }, [loading])
   return (
     <Card>
       <Rows>
         <Row>
-          <H1>Fetching your node(s)</H1>
+          <H1>Fetching your <Gradient>node</Gradient></H1>
           <Text>Please wait, synchronization is in progress...</Text>
         </Row>
         <Separator />
@@ -97,27 +107,29 @@ function Step6({ nextStep, previousStep, uuid }: PreviousStepProps) {
         }
         {!loading &&
           <>
-            <Text>My nodes:</Text>
+            <Text>My node:</Text>
             <SeparatorSM />
-            <DisplayNode>
-              {nodes && nodes.map((node, index) => {
-                return (
-                  <>
-                    <p>Node {index + 1}</p>
-                    <p>RPC: {node.RPC}</p>
-                    <p>Block: {node.L2.Block}</p>
-                  </>
-                )
-              })}
-            </DisplayNode>
+            <Text>
+              "{jsonData?.name}" Starknode syncing Starknet mainnet using {jsonData?.client}.<br />
+              Syncing on block: {nodes[0]?.L2?.Block}
+            </Text>
           </>
         }
-        {/* <Inputs>
-          <ButtonSmall onClick={() => nextStep(-1)}>Home</ButtonSmall>
-        </Inputs> */}
+        <Separator />
+        <ButtonSmall onClick={() => nextStep(-1)}>Home</ButtonSmall>
       </Rows>
     </Card>
   )
 }
 
 export default Step6
+
+{/* {nodes && nodes.map((node, index) => {
+                return (
+                  <div key={index}>
+                    <p>Node {index + 1}</p>
+                    <p>RPC: {node.RPC}</p>
+                    <p>Block: {node.L2.Block}</p>
+                  </div>
+                )
+              })} */}

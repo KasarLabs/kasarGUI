@@ -1,6 +1,6 @@
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, TextGraySM, TextGray } from '../../s-components/Texts'
+import { H1, TextGraySM, TextGray, Gradient } from '../../s-components/Texts'
 import styled from 'styled-components'
 import SetupGif from '../../../assets/gif/board.gif'
 import { Separator, SeparatorSM } from '@/components/s-components/utils'
@@ -47,6 +47,7 @@ const Block = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  border-radius: 5px;
 `
 
 
@@ -61,18 +62,14 @@ function Step5({ nextStep, previousStep }: PreviousStepProps) {
     <Card>
       <Rows>
         <Row>
-          <H1>Setup my starknode</H1>
+          <H1>Setup my <Gradient>Starknode</Gradient></H1>
           <TextGray>
             6. Follow these steps:
           </TextGray>
         </Row>
         <RowStep>
           <TextGraySM>
-            1. Remove the micro SD card from your computer.<br />
-            2. Insert the micro SD card into your starknode.<br />
-            3. Connect your starknode to the ethernet.<br />
-            4. Plug your starknode to a power source.<br />
-            5. Click "Next" when you have completed these steps.<br />
+            First, safely eject the micro SD from your computer, then insert it into your Starknode. Connect your Starknode to the Ethernet with the necessary cable, then plug it into a power source. Then click on 'Next'.
           </TextGraySM>
         </RowStep>
         <Image src={SetupGif} alt='setup starknode' />
