@@ -142,6 +142,40 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
     return false
   }
 
+  const handleNextButton = async (step: number, userName: string) => {
+    if (step === 1) {
+      try {
+        const { data } = await axios.post(`${SERVER_PUBLIC_API}/checkUsernameIsTaken`, {
+          userName: userName,
+        });
+        if (data.ok) {
+          toast.error('userName already taken')
+        } else {
+          setStep(step + 1)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    } else if (step === 2) {
+      try {
+        const { data } = await axios.post(`${SERVER_PUBLIC_API}/checkEmailIsTaken`, {
+          email: email,
+        });
+        if (data.ok) {
+          toast.error('Email already taken')
+        } else {
+          setStep(step + 1)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+
+    } else {
+      setStep(step + 1)
+    }
+
+  }
+
   return (
     <Card>
       <Rows>
@@ -189,7 +223,7 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
             <Buttons>
               <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
             </Buttons>
-            <ButtonSmall type='button' disabled={isDisabledButton(step, firstName, lastName, userName, email, password)} onClick={() => setStep(step + 1)}>
+            <ButtonSmall type='button' disabled={isDisabledButton(step, firstName, lastName, userName, email, password)} onClick={() => handleNextButton(step, userName)}>
               Next
             </ButtonSmall>
           </FlexRow>
@@ -222,5 +256,4 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
     </Card>
   )
 }
-
 export default Step1

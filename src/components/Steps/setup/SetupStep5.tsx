@@ -69,7 +69,7 @@ function Step5({ nextStep, previousStep }: PreviousStepProps) {
         </Row>
         <RowStep>
           <TextGraySM>
-            First, safely eject the micro SD from your computer, then insert it into your Starknode. Connect your Starknode to the Ethernet with the necessary cable, then plug it into a power source. Then click on 'Next'.
+            (1) Safely eject the micro SD from your computer, (2) insert it into your Starknode. (3) Connect your Starknode to the Ethernet with the necessary cable, (4) Plug it into a power source. Then click on 'Next'.
           </TextGraySM>
         </RowStep>
         <Image src={SetupGif} alt='setup starknode' />

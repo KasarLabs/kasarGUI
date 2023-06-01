@@ -10,6 +10,7 @@ import { IJson } from '@/App'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import axios from 'axios'
 import { SERVER_PUBLIC_API } from '@/constants'
+import { SeparatorSM } from '@/components/s-components/utils'
 
 const Rows = styled.div`
   display: flex;
@@ -31,7 +32,7 @@ const Row = styled.div`
 const Inputs = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   width: 100%;
 `
 
@@ -96,6 +97,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
   const [nameNode, setName] = useState('')
   const [client, setClient] = useState('Pathfinder')
   const [rpc, setRpc] = useState('')
+  const [wallet, setWallet] = useState('')
   const [open, setOpen] = useState(false)
 
   const handleSubmit = async (e: any) => {
@@ -108,7 +110,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
         console.log(data.error)
       }
       if (nameNode && client && rpc && data) {
-        setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.message })
+        setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.message, wallet: wallet })
         setUuid(data.message)
         nextStep(4)
       }
@@ -122,8 +124,8 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
     setOpen(!open)
   }
 
-  function isDisabledButton(nameNode: string, client: string, rpc: string) {
-    if (!nameNode || !client || !rpc)
+  function isDisabledButton(nameNode: string, client: string, rpc: string, wallet: string) {
+    if (!nameNode || !client || !rpc || !wallet)
       return true
     return false;
   }
@@ -159,11 +161,16 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
               <Text>Ethereum RPC url</Text>
               <Input value={rpc} onChange={e => setRpc(e.target.value)} placeholder='Enter your L1 RPC url key' />
             </Block>
+            <Block>
+              <Text>Wallet</Text>
+              <Input value={wallet} onChange={e => setWallet(e.target.value)} placeholder='Enter your starknet wallet' />
+            </Block>
           </Inputs>
         </form>
+        <SeparatorSM />
         <SpaceBetween>
           <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
-          <ButtonSmall disabled={isDisabledButton(nameNode, client, rpc)} type='submit' form='auth'>Submit</ButtonSmall>
+          <ButtonSmall disabled={isDisabledButton(nameNode, client, rpc, wallet)} type='submit' form='auth'>Submit</ButtonSmall>
         </SpaceBetween>
       </Rows>
     </Card>

@@ -55,19 +55,10 @@ function Verification({ nextStep }: StepProps) {
           <Image src={Logo} alt='starknode' />
           <H2>Thank you for registering</H2>
           <TextGray>
-            You have received an email. Please check your email (spam)
+            You have received an email. Please check your email (spam).
+            If you didn't receive an email, please contact support <span style={{ cursor: 'pointer', color: '#2969D2' }} onClick={() => shell.openExternal('https://t.me/kasarlabs')} >here</span>
           </TextGray>
         </Row>
-        <Row>
-          <TextGray>
-            If you didn't receive an email, please contact support:
-          </TextGray>
-          <Flex>
-            <BsTwitter style={{ cursor: 'pointer' }} onClick={() => shell.openExternal('https://twitter.com/kasarlabs')} size={30} />
-            <BsTelegram style={{ cursor: 'pointer' }} onClick={() => shell.openExternal('https://t.me/+jZZuOamlUM5lNWNk')} size={30} />
-          </Flex>
-        </Row>
-
         <Buttons>
           <OutlineButton onClick={() => nextStep(8)}>
             Login
