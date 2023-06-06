@@ -58,12 +58,28 @@ type PreviousStepProps = {
 function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   const [loading, setLoading] = useState(true)
   const [nodes, setNodes] = useState([])
+  const [l1sync, setL1Sync] = useState()
+
+  useEffect(() => {
+    const createNode = async () => {
+      try {
+        const { data } = await axios.post(`${SERVER_NODE_API}/node/create`, {
+          ProviderId: jsonData?.token,
+          RPC: jsonData?.rpc_key
+        });
+        console.log('node/create', data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    createNode()
+  }, [])
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     const callNode = async () => {
       const { data } = await axios.get(`${SERVER_NODE_API}/node/getAllOf?provider_id=${uuid}`);
-      console.log(data);
+      console.log('getAllOf', data);
       if (data.length) {
         clearInterval(intervalId); // Stop calling the API once data is not empty
         setLoading(false);
@@ -74,8 +90,22 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
     callNode();
     intervalId = setInterval(callNode, 5000); // Call the API every 5 seconds
     return () => clearInterval(intervalId); // Clean up the interval on unmount
-  }, [uuid]);
+  }, []);
 
+
+
+  useEffect(() => {
+    const getSync = async () => {
+      // const { data } = await axios.post(`${SERVER_NODE_API}/node/L1GetHandler`, {
+      //   node_id: String(nodes[0].ID),
+      //   provider_id: uuid,
+      // });
+      const { data } = await axios.get(`${SERVER_NODE_API}/node/L1/get?node_id=${String(nodes[0].ID)}&provider_id=${uuid}`);
+      setL1Sync(data)
+      console.log('L1GetHandler', data);
+    }
+    getSync()
+  }, [nodes])
   useEffect(() => {
     if (!loading) {
       confetti({
@@ -111,7 +141,7 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
             <SeparatorSM />
             <Text>
               "{jsonData?.name}" Starknode syncing Starknet mainnet using {jsonData?.client}.<br />
-              Syncing on block: {nodes[0]?.L2?.Block}
+              Syncing on block: {l1sync?.Block}
             </Text>
           </>
         }

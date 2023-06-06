@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { Gradient, H1, TextGray } from '../../s-components/Texts'
 import Logo from '../../../assets/kasar.jpg'
 import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
+import { SERVER_NODE_API } from '@/constants'
+import axios from 'axios'
 
 const Image = styled.img`
   width: 61px;
@@ -38,6 +40,17 @@ type PreviousStepProps = {
 
 
 function SetupStep0({ nextStep, previousStep }: PreviousStepProps) {
+  // useEffect(() => {
+  //   const sendData = async () => {
+
+  //     const { data } = await axios.post(`${SERVER_NODE_API}/provider/create`, {
+  //       ID: '44c0b66e-6c60-4fa4-88b2-1ea862e8c3d5',
+  //       Address: '0x63410ed8d98869F7Dc302DB4251dA2532490F355',
+  //     })
+  //     console.log('!!!', data)
+  //   }
+  //   sendData()
+  // })
   return (
     <Card>
       <Rows>
