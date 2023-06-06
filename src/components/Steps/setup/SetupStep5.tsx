@@ -4,7 +4,9 @@ import { H1, TextGraySM, TextGray, Gradient } from '../../s-components/Texts'
 import styled from 'styled-components'
 import SetupGif from '../../../assets/gif/board.gif'
 import { Separator, SeparatorSM } from '@/components/s-components/utils'
-
+import { SERVER_NODE_API } from '@/constants'
+import axios from 'axios'
+import { IJson } from '@/App'
 
 const Rows = styled.div`
   display: flex;
@@ -54,10 +56,24 @@ const Image = styled.img`
 type PreviousStepProps = {
   nextStep: (num: number) => void;
   previousStep: () => void;
+  jsonData: IJson | undefined;
 }
 
 
-function Step5({ nextStep, previousStep }: PreviousStepProps) {
+function Step5({ nextStep, previousStep, jsonData }: PreviousStepProps) {
+
+  const handleClick = async () => {
+    nextStep(6)
+    try {
+      const { data } = await axios.post(`${SERVER_NODE_API}/node/create`, {
+        ProviderId: jsonData?.token,
+        RPC: jsonData?.rpc_key
+      });
+      console.log('create:', data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <Card>
       <Rows>
@@ -74,7 +90,7 @@ function Step5({ nextStep, previousStep }: PreviousStepProps) {
         </RowStep>
         <Image src={SetupGif} alt='setup starknode' />
         <Inputs>
-          <ButtonSmall onClick={() => nextStep(6)}>Next</ButtonSmall>
+          <ButtonSmall onClick={handleClick}>Next</ButtonSmall>
         </Inputs>
       </Rows>
     </Card>

@@ -4,15 +4,32 @@
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { Gradient, H1, Text, TextGray, TextGraySM } from '../../s-components/Texts'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
-import { Separator, SeparatorSM } from '@/components/s-components/utils'
+import { GradientText, Separator, SeparatorSM } from '@/components/s-components/utils'
 import axios from 'axios'
 import { SERVER_NODE_API } from '@/constants'
 import { TailSpin } from 'react-loader-spinner'
 import { IJson } from '@/App'
 
+
+const ScrollBar = css`
+  width: 10px;
+`;
+
+const ScrollBarTrack = css`
+  background: #f1f1f1;
+`;
+
+const ScrollBarThumb = css`
+  background: #888;
+border-radius: 10px;
+`;
+
+const ScrollBarThumbHover = css`
+  background: #555;
+`;
 const Rows = styled.div`
   display: flex;
   flex-direction: column;
@@ -36,9 +53,28 @@ const DisplayNode = styled.div`
   box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.25);
   padding: 10px;
   border-radius: 5px;
-p{
-margin: 0;
-}
+  max-height: 400px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    ${ScrollBar}
+  }
+  
+  &::-webkit-scrollbar-track {
+    ${ScrollBarTrack}
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    ${ScrollBarThumb}
+  }
+  
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    ${ScrollBarThumbHover}
+  }
+  p{
+    margin: 0;
+  }
 `
 
 const Block = styled.div`
@@ -58,8 +94,9 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   const [nodes, setNodes] = useState([])
   const [l1sync, setL1Sync] = useState()
 
-
   useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
     const callNode = async () => {
       const { data } = await axios.get(`${SERVER_NODE_API}/node/getAllOf?provider_id=${uuid}`);
       console.log('getAllOf', data);
@@ -69,55 +106,26 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       }
     };
 
-    const createNode = async () => {
-      try {
-        const { data } = await axios.post(`${SERVER_NODE_API}/node/create`, {
-          ProviderId: jsonData?.token,
-          RPC: jsonData?.rpc_key
-        });
-        callNode();
-
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    createNode()
+    callNode()
+    intervalId = setInterval(callNode, 5000); // Call the API every 5 seconds
+    return () => clearInterval(intervalId); // Clean up the interval on unmount
   }, [])
 
   // useEffect(() => {
   //   let intervalId: NodeJS.Timeout;
-  //   const callNode = async () => {
-  //     const { data } = await axios.get(`${SERVER_NODE_API}/node/getAllOf?provider_id=${uuid}`);
-  //     console.log('getAllOf', data);
-  //     if (data.length) {
+
+  //   const getSync = async () => {
+  //     const { data } = await axios.get(`${SERVER_NODE_API}/node/L1/get?node_id=${String(nodes[0].ID)}&provider_id=${uuid}`);
+  //     setL1Sync(data)
+  //     if (data.SyncTime > 0) {
   //       clearInterval(intervalId); // Stop calling the API once data is not empty
-  //       setLoading(false);
-  //       setNodes(data);
   //     }
-  //   };
-  //   setLoading(true);
-  //   callNode();
-  //   intervalId = setInterval(callNode, 5000); // Call the API every 5 seconds
+  //     console.log('L1GetHandler', data);
+  //   }
+  //   getSync()
+  //   intervalId = setInterval(getSync, 5000); // Call the API every 5 seconds
   //   return () => clearInterval(intervalId); // Clean up the interval on unmount
-  // }, []);
-
-
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-
-    const getSync = async () => {
-      const { data } = await axios.get(`${SERVER_NODE_API}/node/L1/get?node_id=${String(nodes[0].ID)}&provider_id=${uuid}`);
-      setL1Sync(data)
-      if (data.SyncTime > 0) {
-        clearInterval(intervalId); // Stop calling the API once data is not empty
-      }
-      console.log('L1GetHandler', data);
-    }
-    getSync()
-    intervalId = setInterval(getSync, 5000); // Call the API every 5 seconds
-    return () => clearInterval(intervalId); // Clean up the interval on unmount
-  }, [nodes])
+  // }, [nodes])
 
   useEffect(() => {
     if (!loading) {
@@ -128,6 +136,7 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       });
     }
   }, [loading])
+
   return (
     <Card>
       <Rows>
@@ -150,23 +159,43 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
         }
         {!loading &&
           <>
-            <Text>My node:</Text>
-            <SeparatorSM />
             <Text>
-              "{jsonData?.name}" Starknode syncing Starknet mainnet using {jsonData?.client}.<br />
+              <GradientText>{jsonData?.name}</GradientText> Starknode syncing on Starknet mainnet using {jsonData?.client}.<br />
             </Text>
-            <Text style={{ display: 'flex', gap: '10px' }}>
-              Syncing on block: {l1sync?.SyncTime > 0 ? <>{l1sync?.SyncTime}</> : <><TailSpin
-                height="25"
-                width="25"
-                color="#000"
-                ariaLabel="tail-spin-loading"
-                radius="2"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-              /></>}
-            </Text>
+            <SeparatorSM />
+            <DisplayNode>
+              {nodes && nodes.map((node, index) => {
+                // const getSync = async () => {
+                //   const { data } = await axios.get(`${SERVER_NODE_API}/node/L1/get?node_id=${index}&provider_id=${uuid}`);
+                //   setL1Sync(data)
+                //   console.log('L1GetHandler', data);
+                // }
+                // getSync()
+                // console.log(l1sync)
+                return (
+                  <div key={node.ID}>
+                    <Text style={{ fontSize: "12px" }}>ID: {node.ID}</Text>
+                    <Text style={{ fontSize: "12px" }}>RPC: {node.RPC}</Text>
+                  </div>
+                )
+              })
+              }
+            </DisplayNode>
+            {/* <Text style={{ display: 'flex', gap: '10px' }}>
+              Syncing on block: {l1sync?.SyncTime > 0 ? <>{l1sync?.SyncTime}</>
+                :
+                <TailSpin
+                  height="25"
+                  width="25"
+                  color="#000"
+                  ariaLabel="tail-spin-loading"
+                  radius="2"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              }
+            </Text> */}
           </>
         }
         <Separator />
