@@ -17,8 +17,6 @@ const Rows = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  align-items: center;
-  justify-content: center;
   height: 100%;
 `
 
@@ -60,14 +58,25 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   const [nodes, setNodes] = useState([])
   const [l1sync, setL1Sync] = useState()
 
+
   useEffect(() => {
+    const callNode = async () => {
+      const { data } = await axios.get(`${SERVER_NODE_API}/node/getAllOf?provider_id=${uuid}`);
+      console.log('getAllOf', data);
+      if (data.length) {
+        setLoading(false);
+        setNodes(data);
+      }
+    };
+
     const createNode = async () => {
       try {
         const { data } = await axios.post(`${SERVER_NODE_API}/node/create`, {
           ProviderId: jsonData?.token,
           RPC: jsonData?.rpc_key
         });
-        console.log('node/create', data)
+        callNode();
+
       } catch (err) {
         console.log(err)
       }
@@ -75,37 +84,41 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
     createNode()
   }, [])
 
+  // useEffect(() => {
+  //   let intervalId: NodeJS.Timeout;
+  //   const callNode = async () => {
+  //     const { data } = await axios.get(`${SERVER_NODE_API}/node/getAllOf?provider_id=${uuid}`);
+  //     console.log('getAllOf', data);
+  //     if (data.length) {
+  //       clearInterval(intervalId); // Stop calling the API once data is not empty
+  //       setLoading(false);
+  //       setNodes(data);
+  //     }
+  //   };
+  //   setLoading(true);
+  //   callNode();
+  //   intervalId = setInterval(callNode, 5000); // Call the API every 5 seconds
+  //   return () => clearInterval(intervalId); // Clean up the interval on unmount
+  // }, []);
+
+
+
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
-    const callNode = async () => {
-      const { data } = await axios.get(`${SERVER_NODE_API}/node/getAllOf?provider_id=${uuid}`);
-      console.log('getAllOf', data);
-      if (data.length) {
-        clearInterval(intervalId); // Stop calling the API once data is not empty
-        setLoading(false);
-        setNodes(data);
-      }
-    };
-    setLoading(true);
-    callNode();
-    intervalId = setInterval(callNode, 5000); // Call the API every 5 seconds
-    return () => clearInterval(intervalId); // Clean up the interval on unmount
-  }, []);
 
-
-
-  useEffect(() => {
     const getSync = async () => {
-      // const { data } = await axios.post(`${SERVER_NODE_API}/node/L1GetHandler`, {
-      //   node_id: String(nodes[0].ID),
-      //   provider_id: uuid,
-      // });
       const { data } = await axios.get(`${SERVER_NODE_API}/node/L1/get?node_id=${String(nodes[0].ID)}&provider_id=${uuid}`);
       setL1Sync(data)
+      if (data.SyncTime > 0) {
+        clearInterval(intervalId); // Stop calling the API once data is not empty
+      }
       console.log('L1GetHandler', data);
     }
     getSync()
+    intervalId = setInterval(getSync, 5000); // Call the API every 5 seconds
+    return () => clearInterval(intervalId); // Clean up the interval on unmount
   }, [nodes])
+
   useEffect(() => {
     if (!loading) {
       confetti({
@@ -141,7 +154,18 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
             <SeparatorSM />
             <Text>
               "{jsonData?.name}" Starknode syncing Starknet mainnet using {jsonData?.client}.<br />
-              Syncing on block: {l1sync?.Block}
+            </Text>
+            <Text style={{ display: 'flex', gap: '10px' }}>
+              Syncing on block: {l1sync?.SyncTime > 0 ? <>{l1sync?.SyncTime}</> : <><TailSpin
+                height="25"
+                width="25"
+                color="#000"
+                ariaLabel="tail-spin-loading"
+                radius="2"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+              /></>}
             </Text>
           </>
         }
