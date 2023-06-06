@@ -61,6 +61,8 @@ const FlexRow = styled.div`
 type PreviousStepProps = {
   nextStep: (num: number) => void;
   previousStep: () => void;
+  wallet: string,
+  setWallet: (arg: string) => void;
 }
 
 
@@ -70,7 +72,7 @@ const Span = styled.span`
 `
 
 
-function Step1({ nextStep, previousStep }: PreviousStepProps) {
+function Step1({ nextStep, previousStep, wallet, setWallet }: PreviousStepProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
@@ -89,6 +91,7 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         firstName: firstName,
         lastName: lastName,
         userName: userName,
+        wallet: wallet,
         email: email,
         password: password,
       });
@@ -105,6 +108,7 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
         setUserName('');
         setEmail('');
         setPassword('');
+        setWallet('')
         nextStep(9);
       }
     } catch (err) {
@@ -115,19 +119,21 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
     }
   }
 
-  function isDisabledButton(step: number, firstName: string, lastName: string, userName: string, email: string, password: string) {
+  function isDisabledButton(step: number, firstName: string, lastName: string, userName: string, wallet: string, email: string, password: string) {
     switch (step) {
       case 1:
         return !firstName || !lastName || !userName;
       case 2:
         return !email;
+      case 3:
+        return !wallet;
       default:
         return false;
     }
   }
 
   function isDisabledButtonSubmit(step: number, password: string, verifyPass: string) {
-    if (step === 3) {
+    if (step === 4) {
       if (!password) {
         return true
       }
@@ -194,6 +200,11 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
           }
           {step === 3 &&
             <TextGray>
+              2. Please enter your wallet
+            </TextGray>
+          }
+          {step === 4 &&
+            <TextGray>
               2. Please enter a password (min 6 characters)
             </TextGray>
           }
@@ -215,15 +226,17 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
           step={step}
           setVerifyPass={setVerifyPass}
           verifyPass={verifyPass}
+          setWallet={setWallet}
+          wallet={wallet}
         />
 
         <SeparatorSM />
-        {step === 1 || step === 2 ?
+        {step === 1 || step === 2 || step === 3 ?
           <FlexRow>
             <Buttons>
               <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
             </Buttons>
-            <ButtonSmall type='button' disabled={isDisabledButton(step, firstName, lastName, userName, email, password)} onClick={() => handleNextButton(step, userName)}>
+            <ButtonSmall type='button' disabled={isDisabledButton(step, firstName, lastName, userName, wallet, email, password)} onClick={() => handleNextButton(step, userName)}>
               Next
             </ButtonSmall>
           </FlexRow>

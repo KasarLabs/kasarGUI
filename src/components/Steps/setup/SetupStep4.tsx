@@ -7,6 +7,8 @@ import fs from 'fs'
 import path from 'path'
 import { useEffect, useState } from 'react'
 import { LineProgressBar } from '@frogress/line'
+import { SERVER_NODE_API } from '@/constants'
+import axios from 'axios'
 
 const Rows = styled.div`
   display: flex;
@@ -47,6 +49,22 @@ type PreviousStepProps = {
 
 function Step4({ nextStep, previousStep, jsonData, pathSD, setPathSD }: PreviousStepProps) {
   const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const createNode = async () => {
+      try {
+        const { data } = await axios.post(`${SERVER_NODE_API}/node/create`, {
+          ProviderId: jsonData?.token,
+          RPC: jsonData?.rpc_key
+        });
+        console.log(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    createNode()
+  }, [])
+
   useEffect(() => {
     if (progress < 100) {
       const timer = setInterval(() => {
