@@ -1,19 +1,12 @@
 
 
 
-import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
+import { ButtonSmall } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
-import { H1, Text, TextGray } from '../../s-components/Texts'
+import { Gradient, H1, Text } from '../../s-components/Texts'
 import styled from 'styled-components'
-import ArrowGray from '../../../assets/icons/ArrowGray.png'
-import SetupGif from '../../../assets/gif/setup.png'
-import { Input } from '@/components/s-components/Input'
-import { SpaceBetween } from '@/components/s-components/Flex'
-import { useEffect } from 'react'
-import confetti from 'canvas-confetti'
 import { Separator } from '@/components/s-components/utils'
-import axios from 'axios'
-import { SERVER_NODE_API } from '@/constants'
+import { SpaceBetween } from '@/components/s-components/Flex'
 
 const Rows = styled.div`
   display: flex;
@@ -52,26 +45,20 @@ type PreviousStepProps = {
 
 function Step7({ nextStep, previousStep }: PreviousStepProps) {
 
-  useEffect(() => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-  }, [])
-
   return (
     <Card>
       <Rows>
         <Row>
-          <H1>Congratulations</H1>
-          <Text>Installation is complete!</Text>
+          <H1>Query you <Gradient>Starknode</Gradient></H1>
+          <Text>how to expose your RPC</Text>
         </Row>
         <Separator />
-        <Inputs>
-          <ButtonSmall onClick={() => nextStep(-1)}>Home</ButtonSmall>
-        </Inputs>
+        <Text>lorem ipsum...</Text>
       </Rows>
+      <SpaceBetween>
+        <ButtonSmall onClick={() => nextStep(7)}>Prev</ButtonSmall>
+        <ButtonSmall onClick={() => nextStep(15)}>Next</ButtonSmall>
+      </SpaceBetween>
     </Card>
   )
 }

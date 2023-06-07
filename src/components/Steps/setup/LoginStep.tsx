@@ -71,8 +71,7 @@ function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProp
 
     try {
       const { data } = await axios.post(`${SERVER_PUBLIC_API}/login`, {
-        email: email,
-        userName: email,
+        identifier: email,
         password: password,
       });
       if (data.error) {

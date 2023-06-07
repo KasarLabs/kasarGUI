@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, OutlineButton } from '../../s-components/Buttons'
+import { ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { Gradient, H1, TextGray } from '../../s-components/Texts'
 import Logo from '../../../assets/kasar.jpg'
@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import ArrowGray from '../../../assets/icons/ArrowGray.png'
 import { SERVER_NODE_API } from '@/constants'
 import axios from 'axios'
+import { Separator } from '@/components/s-components/utils'
 
 const Image = styled.img`
   width: 61px;
@@ -38,6 +39,13 @@ type PreviousStepProps = {
   previousStep: () => void;
 }
 
+const FlexRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+`
 
 function SetupStep0({ nextStep, previousStep }: PreviousStepProps) {
   // useEffect(() => {
@@ -73,6 +81,11 @@ function SetupStep0({ nextStep, previousStep }: PreviousStepProps) {
           </OutlineButton>
         </Buttons>
       </Rows>
+      <Separator />
+      <FlexRow>
+        <ButtonSmall onClick={() => nextStep(-1)}>Prev</ButtonSmall>
+        <div />
+      </FlexRow>
     </Card>
   )
 }

@@ -114,7 +114,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
         console.log(data.error)
       }
       if (nameNode && client && rpc && data) {
-        setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.data.token, wallet: data.data.wallet, update: false })
+        setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.data.token, wallet: data.data.wallet, action: 'install' })
         setUuid(data.data.token)
         nextStep(4)
       }

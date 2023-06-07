@@ -1,6 +1,3 @@
-
-
-
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { Gradient, H1, Text, TextGray, TextGraySM } from '../../s-components/Texts'
@@ -201,8 +198,8 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       </Rows>
       <Separator />
       <SpaceBetween>
-        <ButtonSmall onClick={() => nextStep(-1)}>Home</ButtonSmall>
-        <ButtonSmall onClick={() => shell.openExternal('https://app.kasar.io')}>App</ButtonSmall>
+        <ButtonSmall onClick={() => shell.openExternal('https://app.kasar.io')}>Track node</ButtonSmall>
+        <ButtonSmall onClick={() => nextStep(7)}>Query your node (advanced)</ButtonSmall>
       </SpaceBetween>
     </Card>
   )
