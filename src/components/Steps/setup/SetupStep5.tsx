@@ -69,7 +69,7 @@ function Step5({ nextStep, previousStep, jsonData }: PreviousStepProps) {
         ProviderId: jsonData?.token,
         RPC: jsonData?.rpc_key
       });
-      console.log('create:', data)
+      // console.log('create:', data)
     } catch (err) {
       console.log(err)
     }

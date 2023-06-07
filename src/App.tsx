@@ -35,6 +35,7 @@ export interface IJson {
   rpc_key: string;
   token: string;
   wallet: string;
+  update: boolean;
 }
 
 function App() {

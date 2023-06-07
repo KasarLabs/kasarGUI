@@ -28,7 +28,7 @@ const Row = styled.div`
 `
 
 const Inputs = styled.div`
- display: flex;
+  display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
@@ -49,8 +49,6 @@ type PreviousStepProps = {
 
 function Step4({ nextStep, previousStep, jsonData, pathSD, setPathSD }: PreviousStepProps) {
   const [progress, setProgress] = useState(0)
-
-
 
   useEffect(() => {
     if (progress < 100) {
@@ -75,7 +73,7 @@ function Step4({ nextStep, previousStep, jsonData, pathSD, setPathSD }: Previous
       // Only try to move if write was successful       
       fs.copyFile(source, destination, function (err) {
         if (err) { console.log(err); } else {
-          console.log('JSON copied successfully');
+          // console.log('JSON copied successfully');
           // Delete original file if needed           
           fs.unlink(source, function (err) {
             if (err) {

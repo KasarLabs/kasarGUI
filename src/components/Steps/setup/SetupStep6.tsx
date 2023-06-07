@@ -12,7 +12,8 @@ import axios from 'axios'
 import { SERVER_NODE_API } from '@/constants'
 import { TailSpin } from 'react-loader-spinner'
 import { IJson } from '@/App'
-
+import { SpaceBetween } from '@/components/s-components/Flex'
+import { shell } from 'electron'
 
 const ScrollBar = css`
   width: 10px;
@@ -92,14 +93,13 @@ type PreviousStepProps = {
 function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   const [loading, setLoading] = useState(true)
   const [nodes, setNodes] = useState([])
-  const [l1sync, setL1Sync] = useState()
+  const [l2sync, setL2Sync] = useState()
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
     const callNode = async () => {
       const { data } = await axios.get(`${SERVER_NODE_API}/node/getAllOf?provider_id=${uuid}`);
-      console.log('getAllOf', data);
       if (data.length) {
         setLoading(false);
         setNodes(data);
@@ -111,21 +111,21 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
     return () => clearInterval(intervalId); // Clean up the interval on unmount
   }, [])
 
-  // useEffect(() => {
-  //   let intervalId: NodeJS.Timeout;
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
 
-  //   const getSync = async () => {
-  //     const { data } = await axios.get(`${SERVER_NODE_API}/node/L1/get?node_id=${String(nodes[0].ID)}&provider_id=${uuid}`);
-  //     setL1Sync(data)
-  //     if (data.SyncTime > 0) {
-  //       clearInterval(intervalId); // Stop calling the API once data is not empty
-  //     }
-  //     console.log('L1GetHandler', data);
-  //   }
-  //   getSync()
-  //   intervalId = setInterval(getSync, 5000); // Call the API every 5 seconds
-  //   return () => clearInterval(intervalId); // Clean up the interval on unmount
-  // }, [nodes])
+    const getSync = async () => {
+      const index = String(nodes[nodes.length - 1].ID)
+      const { data } = await axios.get(`${SERVER_NODE_API}/node/L2/get?node_id=${index}&provider_id=${uuid}`);
+      setL2Sync(data)
+      if (data.SyncTime > 0) {
+        clearInterval(intervalId); // Stop calling the API once data is not empty
+      }
+    }
+    getSync()
+    intervalId = setInterval(getSync, 5000); // Call the API every 5 seconds
+    return () => clearInterval(intervalId); // Clean up the interval on unmount
+  }, [nodes])
 
   useEffect(() => {
     if (!loading) {
@@ -163,7 +163,7 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
               <GradientText>{jsonData?.name}</GradientText> Starknode syncing on Starknet mainnet using {jsonData?.client}.<br />
             </Text>
             <SeparatorSM />
-            <DisplayNode>
+            {/* <DisplayNode>
               {nodes && nodes.map((node, index) => {
                 // const getSync = async () => {
                 //   const { data } = await axios.get(`${SERVER_NODE_API}/node/L1/get?node_id=${index}&provider_id=${uuid}`);
@@ -180,9 +180,9 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
                 )
               })
               }
-            </DisplayNode>
-            {/* <Text style={{ display: 'flex', gap: '10px' }}>
-              Syncing on block: {l1sync?.SyncTime > 0 ? <>{l1sync?.SyncTime}</>
+            </DisplayNode> */}
+            <Text style={{ display: 'flex', gap: '10px' }}>
+              Syncing on block: {l2sync?.SyncTime > 0 ? <>{l2sync?.SyncTime}</>
                 :
                 <TailSpin
                   height="25"
@@ -195,24 +195,17 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
                   visible={true}
                 />
               }
-            </Text> */}
+            </Text>
           </>
         }
-        <Separator />
-        <ButtonSmall onClick={() => nextStep(-1)}>Home</ButtonSmall>
       </Rows>
+      <Separator />
+      <SpaceBetween>
+        <ButtonSmall onClick={() => nextStep(-1)}>Home</ButtonSmall>
+        <ButtonSmall onClick={() => shell.openExternal('https://app.kasar.io')}>App</ButtonSmall>
+      </SpaceBetween>
     </Card>
   )
 }
 
 export default Step6
-
-{/* {nodes && nodes.map((node, index) => {
-                return (
-                  <div key={index}>
-                    <p>Node {index + 1}</p>
-                    <p>RPC: {node.RPC}</p>
-                    <p>Block: {node.L2.Block}</p>
-                  </div>
-                )
-              })} */}

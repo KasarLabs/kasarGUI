@@ -75,7 +75,7 @@ function ResetPassword({
       if (data.error) {
         toast.error(data.error)
       } else {
-        console.log(data)
+        // console.log(data)
         toast.success(data.message)
         nextStep(8)
       }
