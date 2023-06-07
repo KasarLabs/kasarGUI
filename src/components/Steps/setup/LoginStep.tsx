@@ -72,6 +72,7 @@ function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProp
     try {
       const { data } = await axios.post(`${SERVER_PUBLIC_API}/login`, {
         email: email,
+        userName: email,
         password: password,
       });
       if (data.error) {
@@ -94,7 +95,7 @@ function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProp
         <Row>
           <H1>Log in to <Gradient>Kasar</Gradient></H1>
           <TextGray>
-            Please, enter your email and password.
+            Please, enter your email/username and password.
           </TextGray>
         </Row>
 

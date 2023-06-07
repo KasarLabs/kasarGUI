@@ -67,8 +67,8 @@ function Login({
     <form onSubmit={handleLogin} id='auth'>
       <Inputs>
         <Block>
-          <Text>Mail</Text>
-          <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email' />
+          <Text>Mail or Username</Text>
+          <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email or your Username' />
         </Block>
         <Block>
           <Text>Password</Text>

@@ -67,7 +67,7 @@ function Register({
 
 
   return (
-    <form onSubmit={handleSubmit} id='auth'>
+    <form onSubmit={handleSubmit} id='auth' onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}>
       <Inputs>
         {step === 1 &&
           <FlexRow>
