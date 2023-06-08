@@ -198,8 +198,8 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       </Rows>
       <Separator />
       <SpaceBetween>
-        <ButtonSmall onClick={() => shell.openExternal('https://app.kasar.io')}>Track node</ButtonSmall>
-        <ButtonSmall onClick={() => nextStep(7)}>Query your node (advanced)</ButtonSmall>
+        <ButtonSmall style={{ fontSize: '12px' }} onClick={() => shell.openExternal('https://app.kasar.io')}>Track node</ButtonSmall>
+        <ButtonSmall style={{ fontSize: '12px' }} onClick={() => nextStep(7)}>Query your node (advanced)</ButtonSmall>
       </SpaceBetween>
     </Card>
   )

@@ -78,7 +78,7 @@ function Step8({ nextStep, previousStep }: PreviousStepProps) {
       </Rows>
       <SpaceBetween>
         <ButtonSmall onClick={() => nextStep(7)}>Prev</ButtonSmall>
-        <ButtonSmall onClick={() => nextStep(8)}>Next</ButtonSmall>
+        <div />
       </SpaceBetween>
     </Card>
   )
