@@ -63,8 +63,6 @@ type PreviousStepProps = {
 
 function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProps) {
   const [password, setPassword] = useState('');
-  const [state, setState] = useState({});
-
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -77,10 +75,7 @@ function LoginStep({ nextStep, previousStep, setEmail, email }: PreviousStepProp
       if (data.error) {
         toast.error(data.error)
       } else {
-        setState({
-          user: data.user,
-          token: data.token
-        });
+
         toast.success('User Logged in')
         nextStep(2);
       }

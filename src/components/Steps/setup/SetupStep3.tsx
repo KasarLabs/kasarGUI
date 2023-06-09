@@ -102,20 +102,15 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      // const { data } = await axios.post(`${SERVER_PUBLIC_API}/getTokenOfUser`, {
-      //   email: email,
-      // });
-
-
       const { data } = await axios.post(`${SERVER_PUBLIC_API}/getUserFromEmail`, {
-        email: email,
+        identifier: email,
       });
       if (data.error) {
         console.log(data.error)
       }
       if (nameNode && client && rpc && data) {
-        setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.data.token, wallet: data.data.wallet, action: 'install' })
-        setUuid(data.data.token)
+        setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.token, wallet: data.wallet, action: 'install' })
+        setUuid(data.token)
         nextStep(4)
       }
     } catch (err) {

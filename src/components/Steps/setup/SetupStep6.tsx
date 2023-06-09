@@ -102,7 +102,6 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
         setNodes(data);
       }
     };
-
     callNode()
     intervalId = setInterval(callNode, 5000); // Call the API every 5 seconds
     return () => clearInterval(intervalId); // Clean up the interval on unmount
@@ -112,8 +111,10 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
     let intervalId: NodeJS.Timeout;
 
     const getSync = async () => {
+      //@ts-ignore
       const index = String(nodes[nodes.length - 1].ID)
       const { data } = await axios.get(`${SERVER_NODE_API}/node/L2/get?node_id=${index}&provider_id=${uuid}`);
+      console.log(data)
       setL2Sync(data)
       if (data.SyncTime > 0) {
         clearInterval(intervalId); // Stop calling the API once data is not empty
@@ -142,18 +143,22 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
           <Text>Please wait, synchronization is in progress...</Text>
         </Row>
         <Separator />
-        {loading &&
-          <TailSpin
-            height="100"
-            width="100"
-            color="#000"
-            ariaLabel="tail-spin-loading"
-            radius="2"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
-        }
+        <Row>
+
+          {loading &&
+            <TailSpin
+              height="100"
+              width="100"
+              color="#000"
+              ariaLabel="tail-spin-loading"
+              radius="2"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          }
+        </Row>
+
         {!loading &&
           <>
             <Text>
@@ -179,18 +184,21 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
               }
             </DisplayNode> */}
             <Text style={{ display: 'flex', gap: '10px' }}>
-              Syncing on block: {l2sync?.SyncTime > 0 ? <>{l2sync?.SyncTime}</>
-                :
-                <TailSpin
-                  height="25"
-                  width="25"
-                  color="#000"
-                  ariaLabel="tail-spin-loading"
-                  radius="2"
-                  wrapperStyle={{}}
-                  wrapperClass=""
-                  visible={true}
-                />
+
+              Syncing on block: {
+                //@ts-ignore
+                l2sync?.SyncTime > 0 ? <> {l2sync?.SyncTime} </>
+                  :
+                  <TailSpin
+                    height="25"
+                    width="25"
+                    color="#000"
+                    ariaLabel="tail-spin-loading"
+                    radius="2"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                  />
               }
             </Text>
           </>
