@@ -163,10 +163,11 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
         </Row>
         <Row>
           {!loading &&
-            <Text style={{ display: 'flex', gap: '10px', textAlign: 'center' }}>
+            <>
               {
                 //@ts-ignore
-                l2sync?.SyncTime > 0 ? <> {l2sync?.SyncTime} </>
+                l2sync?.SyncTime > 0 ?
+                  <Text style={{ fontSize: '50px' }}> <Gradient>{l2sync?.SyncTime}</Gradient> </Text>
                   :
                   <TailSpin
                     height="100"
@@ -179,7 +180,7 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
                     visible={true}
                   />
               }
-            </Text>
+            </>
           }
         </Row>
       </Rows>
