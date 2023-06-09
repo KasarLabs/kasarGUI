@@ -167,6 +167,7 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
               {
                 //@ts-ignore
                 l2sync?.SyncTime > 0 ?
+                  //@ts-ignore
                   <Text style={{ fontSize: '50px' }}> <Gradient>{l2sync?.SyncTime}</Gradient> </Text>
                   :
                   <TailSpin
