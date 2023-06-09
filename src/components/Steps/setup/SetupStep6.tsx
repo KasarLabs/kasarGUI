@@ -39,9 +39,7 @@ const Row = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  p {
-    text-align: center;
-  }
+
 `
 
 const DisplayNode = styled.div`
@@ -114,7 +112,6 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       //@ts-ignore
       const index = String(nodes[nodes.length - 1].ID)
       const { data } = await axios.get(`${SERVER_NODE_API}/node/L2/get?node_id=${index}&provider_id=${uuid}`);
-      console.log(data)
       setL2Sync(data)
       if (data.SyncTime > 0) {
         clearInterval(intervalId); // Stop calling the API once data is not empty
@@ -140,7 +137,13 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       <Rows>
         <Row>
           <H1>Fetching your <Gradient>node</Gradient></H1>
-          <Text>Please wait, synchronization is in progress...</Text>
+          <Text>Please wait, synchronization is in progress...<br />
+            {!loading &&
+              <span>
+                <GradientText>{jsonData?.name}</GradientText> Starknode syncing on Starknet mainnet using {jsonData?.client}. Syncing on block:
+              </span>
+            }
+          </Text>
         </Row>
         <Separator />
         <Row>
@@ -158,40 +161,16 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
             />
           }
         </Row>
-
-        {!loading &&
-          <>
-            <Text>
-              <GradientText>{jsonData?.name}</GradientText> Starknode syncing on Starknet mainnet using {jsonData?.client}.<br />
-            </Text>
-            <SeparatorSM />
-            {/* <DisplayNode>
-              {nodes && nodes.map((node, index) => {
-                // const getSync = async () => {
-                //   const { data } = await axios.get(`${SERVER_NODE_API}/node/L1/get?node_id=${index}&provider_id=${uuid}`);
-                //   setL1Sync(data)
-                //   console.log('L1GetHandler', data);
-                // }
-                // getSync()
-                // console.log(l1sync)
-                return (
-                  <div key={node.ID}>
-                    <Text style={{ fontSize: "12px" }}>ID: {node.ID}</Text>
-                    <Text style={{ fontSize: "12px" }}>RPC: {node.RPC}</Text>
-                  </div>
-                )
-              })
-              }
-            </DisplayNode> */}
-            <Text style={{ display: 'flex', gap: '10px' }}>
-
-              Syncing on block: {
+        <Row>
+          {!loading &&
+            <Text style={{ display: 'flex', gap: '10px', textAlign: 'center' }}>
+              {
                 //@ts-ignore
                 l2sync?.SyncTime > 0 ? <> {l2sync?.SyncTime} </>
                   :
                   <TailSpin
-                    height="25"
-                    width="25"
+                    height="100"
+                    width="100"
                     color="#000"
                     ariaLabel="tail-spin-loading"
                     radius="2"
@@ -201,8 +180,8 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
                   />
               }
             </Text>
-          </>
-        }
+          }
+        </Row>
       </Rows>
       <Separator />
       <SpaceBetween>
