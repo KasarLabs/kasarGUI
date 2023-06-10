@@ -11,6 +11,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import axios from 'axios'
 import { SERVER_PUBLIC_API } from '@/constants'
 import { SeparatorSM } from '@/components/s-components/utils'
+import Arrow from '../../../assets/icons/arrow-down.png'
 
 const Rows = styled.div`
   display: flex;
@@ -45,8 +46,8 @@ const Selector = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  left: 00%;
-  top:25%;
+  left: 80%;
+  top:90%;
   width: 200px;
   background-color: #FFF;
   border: none;
@@ -79,8 +80,13 @@ const ClientButton = styled.button`
   padding: 0 20px;
   cursor: pointer;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
+`
+
+const ArrowDown = styled.img`
+  width: 15px;
+  height: 15px;
 `
 
 type PreviousStepProps = {
@@ -95,7 +101,7 @@ type PreviousStepProps = {
 
 function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }: PreviousStepProps) {
   const [nameNode, setName] = useState('')
-  const [client, setClient] = useState('Pathfinder')
+  const [client, setClient] = useState('pathfinder')
   const [rpc, setRpc] = useState('')
   const [open, setOpen] = useState(false)
 
@@ -118,8 +124,8 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
     }
   }
 
-  const selectClient = () => {
-    setClient('Pathfinder')
+  const selectClient = (arg: string) => {
+    setClient(arg)
     setOpen(!open)
   }
 
@@ -145,12 +151,25 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
             </Block>
             <Block style={{ position: 'relative' }} >
               <Text>Client</Text>
-              <ClientButton type='button' onClick={() => setOpen(!open)}>{client}</ClientButton>
+              <ClientButton type='button' onClick={() => setOpen(!open)}>
+                {client}
+                <ArrowDown src={Arrow} alt='starknode' />
+              </ClientButton>
               {open &&
-                <Selector onClick={selectClient}>
-                  <Client>
+                <Selector>
+                  <Client onClick={() => selectClient('pathfinder')}>
                     <TextGray>
-                      Pathfinder
+                      pathfinder
+                    </TextGray>
+                  </Client>
+                  <Client onClick={() => selectClient('juno')}>
+                    <TextGray>
+                      juno
+                    </TextGray>
+                  </Client>
+                  <Client>
+                    <TextGray onClick={() => selectClient('papyrus')}>
+                      papyrus
                     </TextGray>
                   </Client>
                 </Selector>

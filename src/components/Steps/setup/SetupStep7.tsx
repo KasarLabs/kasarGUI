@@ -56,7 +56,7 @@ function Step7({ nextStep, previousStep }: PreviousStepProps) {
         <Text>lorem ipsum...</Text>
       </Rows>
       <SpaceBetween>
-        <ButtonSmall onClick={() => nextStep(7)}>Prev</ButtonSmall>
+        <ButtonSmall onClick={() => nextStep(6)}>Prev</ButtonSmall>
         <ButtonSmall onClick={() => nextStep(15)}>Next</ButtonSmall>
       </SpaceBetween>
     </Card>
