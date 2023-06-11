@@ -49,12 +49,9 @@ const FlexRow = styled.div`
 
 function SetupStep0({ nextStep, previousStep }: PreviousStepProps) {
   // useEffect(() => {
+  //   const id = 8
   //   const sendData = async () => {
-
-  //     const { data } = await axios.post(`${SERVER_NODE_API}/provider/create`, {
-  //       ID: '44c0b66e-6c60-4fa4-88b2-1ea862e8c3d5',
-  //       Address: '0x63410ed8d98869F7Dc302DB4251dA2532490F355',
-  //     })
+  //     const { data } = await axios.get(`${SERVER_NODE_API}/node/remove?id=${id}&provider_id="d9ef45ba-0f62-47f6-a010-07d4ff86e886"`)
   //     console.log('!!!', data)
   //   }
   //   sendData()

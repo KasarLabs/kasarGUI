@@ -67,9 +67,10 @@ function Step5({ nextStep, previousStep, jsonData }: PreviousStepProps) {
     try {
       const { data } = await axios.post(`${SERVER_NODE_API}/node/create`, {
         ProviderId: jsonData?.token,
-        RPC: jsonData?.rpc_key
+        RPC: jsonData?.rpc_key,
+        Client: jsonData?.client,
+        Version: 0.1,
       });
-      // console.log('create:', data)
     } catch (err) {
       console.log(err)
     }

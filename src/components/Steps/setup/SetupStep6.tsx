@@ -132,6 +132,16 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
     }
   }, [loading])
 
+
+  // useEffect(() => {
+  //   const callNode = async () => {
+  //     // const { data } = await axios.get(`${process.env.NEXT_PUBLIC_NODE_API}/node/system/get?node_id=${nodesData?.ID}&provider_id=${state?.user?.token}`);
+  //     const { data } = await axios.get(`${SERVER_NODE_API}/node/system/get?node_id=10&provider_id="d9ef45ba-0f62-47f6-a010-07d4ff86e886"`);
+
+  //     console.log('dataaaaaa', data)
+  //   };
+  //   callNode()
+  // }, [])
   return (
     <Card>
       <Rows>
