@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { LineProgressBar } from '@frogress/line'
 import { SERVER_NODE_API } from '@/constants'
 import axios from 'axios'
+import { ipcRenderer } from 'electron'
 
 const Rows = styled.div`
   display: flex;
@@ -62,30 +63,47 @@ function Step4({ nextStep, previousStep, jsonData, pathSD, setPathSD }: Previous
     }
   }, [progress])
 
+  // useEffect(() => {
+  //   const source = path.join(process.cwd(), 'config.json');
+  //   const destination = path.join(pathSD, 'config.json');
+  //   fs.writeFile(source, JSON.stringify(jsonData), 'utf8', function (err) {
+  //     if (err) {
+  //       console.log('error', err);
+  //       return;  // return early if write failed       
+  //     }
+  //     // Only try to move if write was successful       
+  //     fs.copyFile(source, destination, function (err) {
+  //       if (err) { console.log(err); } else {
+  //         // console.log('JSON copied successfully');
+  //         // Delete original file if needed           
+  //         fs.unlink(source, function (err) {
+  //           if (err) {
+  //             console.log(err);
+  //           } else {
+  //             console.log('Original JSON deleted successfully');
+  //           }
+  //         });
+  //       }
+  //     });
+  //     setPathSD('')
+  //   });
+  // }, []);
+
   useEffect(() => {
-    const source = path.join(process.cwd(), 'config.json');
-    const destination = path.join(pathSD, 'config.json');
-    fs.writeFile(source, JSON.stringify(jsonData), 'utf8', function (err) {
-      if (err) {
-        console.log('error', err);
-        return;  // return early if write failed       
+    // Send the JSON data and destination path to the main process
+    ipcRenderer.send('write-json-to-file', jsonData, pathSD);
+
+    // Listen for the response from the main process
+    ipcRenderer.once('write-json-to-file-response', (event, error) => {
+      if (error) {
+        console.log('Error writing JSON to file:', error);
+      } else {
+        console.log('JSON written to file successfully');
       }
-      // Only try to move if write was successful       
-      fs.copyFile(source, destination, function (err) {
-        if (err) { console.log(err); } else {
-          // console.log('JSON copied successfully');
-          // Delete original file if needed           
-          fs.unlink(source, function (err) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log('Original JSON deleted successfully');
-            }
-          });
-        }
-      });
+
       setPathSD('')
     });
+
   }, []);
   return (
     <Card>

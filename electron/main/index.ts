@@ -2,6 +2,8 @@ import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
+import path from 'path'
+import fs from 'fs'
 
 // The built directory structure
 //
@@ -133,3 +135,17 @@ ipcMain.on('open-directory-dialog', (event) => {
     console.log(err)
   })
 })
+
+ipcMain.on('write-json-to-file', (event, jsonData, filePath) => {
+  const fullPath = path.join(filePath, 'config.json');
+
+  fs.writeFile(fullPath, JSON.stringify(jsonData), 'utf8', function (err) {
+    if (err) {
+      console.log('Error writing JSON to file:', err);
+      event.reply('write-json-to-file-response', err.message);
+    } else {
+      console.log('JSON written to file successfully');
+      event.reply('write-json-to-file-response', null);
+    }
+  });
+});
