@@ -113,7 +113,7 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       const index = String(nodes[nodes.length - 1].ID)
       const { data } = await axios.get(`${SERVER_NODE_API}/node/L2/get?node_id=${index}&provider_id=${uuid}`);
       setL2Sync(data)
-      if (data.SyncTime > 0) {
+      if (data.Block > 0) {
         clearInterval(intervalId); // Stop calling the API once data is not empty
       }
     }
@@ -176,9 +176,9 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
             <>
               {
                 //@ts-ignore
-                l2sync?.SyncTime > 0 ?
+                l2sync?.Block > 0 ?
                   //@ts-ignore
-                  <Text style={{ fontSize: '50px' }}> <Gradient>{l2sync?.SyncTime}</Gradient> </Text>
+                  <Text style={{ fontSize: '50px' }}> <Gradient>{l2sync?.Block}</Gradient> </Text>
                   :
                   <TailSpin
                     height="100"
