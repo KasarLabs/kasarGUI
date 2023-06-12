@@ -34,7 +34,9 @@ export interface IJson {
   name: string;
   client: string;
   rpc_key: string;
-  token: string;
+  osiris_key: string;
+  provider_id: string;
+  node_id: string;
   wallet: string;
   action: string;
 }

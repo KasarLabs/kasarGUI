@@ -73,29 +73,29 @@ function Register({
           <FlexRow>
             <Block>
               <Text>First name</Text>
-              <Input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder='Enter your first name' />
+              <Input value={firstName} onChange={(e: any) => setFirstName(e.target.value)} placeholder='Enter your first name' />
             </Block>
             <Block>
               <Text>Last name</Text>
-              <Input value={lastName} onChange={e => setLastName(e.target.value)} placeholder='Enter your last name' />
+              <Input value={lastName} onChange={(e: any) => setLastName(e.target.value)} placeholder='Enter your last name' />
             </Block>
             <Block>
               <Text>Username</Text>
-              <Input value={userName} onChange={e => setUserName(e.target.value)} placeholder='Enter your username' />
+              <Input value={userName} onChange={(e: any) => setUserName(e.target.value)} placeholder='Enter your username' />
             </Block>
           </FlexRow>
         }
         {step === 2 &&
           <Block>
             <Text>Mail</Text>
-            <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email' />
+            <Input value={email} onChange={(e: any) => setEmail(e.target.value)} placeholder='Enter your email' />
           </Block>
         }
 
         {step === 3 &&
           <Block>
             <Text>Wallet</Text>
-            <Input value={wallet} onChange={e => setWallet(e.target.value)} placeholder='Enter your Starknet wallet' />
+            <Input value={wallet} onChange={(e: any) => setWallet(e.target.value)} placeholder='Enter your Starknet wallet' />
           </Block>
         }
 
@@ -103,11 +103,11 @@ function Register({
           <FlexRow>
             <Block>
               <Text>Password</Text>
-              <Input value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter a password' />
+              <Input value={password} onChange={(e: any) => setPassword(e.target.value)} type='password' placeholder='Enter a password' />
             </Block>
             <Block>
               <Text>Verify your password</Text>
-              <Input value={verifyPass} onChange={e => setVerifyPass(e.target.value)} type='password' placeholder='Enter password again' />
+              <Input value={verifyPass} onChange={(e: any) => setVerifyPass(e.target.value)} type='password' placeholder='Enter password again' />
             </Block>
           </FlexRow>
         }

@@ -68,11 +68,11 @@ function Login({
       <Inputs>
         <Block>
           <Text>Mail or Username</Text>
-          <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email or your Username' />
+          <Input value={email} onChange={(e: any) => setEmail(e.target.value)} placeholder='Enter your email or your Username' />
         </Block>
         <Block>
           <Text>Password</Text>
-          <Input value={password} onChange={e => setPassword(e.target.value)} type='password' placeholder='Enter your password' />
+          <Input value={password} onChange={(e: any) => setPassword(e.target.value)} type='password' placeholder='Enter your password' />
         </Block>
       </Inputs>
     </form>

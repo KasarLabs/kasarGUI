@@ -64,16 +64,16 @@ function Step5({ nextStep, previousStep, jsonData }: PreviousStepProps) {
 
   const handleClick = async () => {
     nextStep(6)
-    try {
-      const { data } = await axios.post(`${SERVER_NODE_API}/node/create`, {
-        ProviderId: jsonData?.token,
-        RPC: jsonData?.rpc_key,
-        Client: jsonData?.client,
-        Version: 0.1,
-      });
-    } catch (err) {
-      console.log(err)
-    }
+    // try {
+    //   const { data } = await axios.post(`${SERVER_NODE_API}/node/create`, {
+    //     ProviderId: jsonData?.provider_id,
+    //     RPC: jsonData?.rpc_key,
+    //     Client: jsonData?.client,
+    //     Version: 0.1,
+    //   });
+    // } catch (err) {
+    //   console.log(err)
+    // }
   }
   return (
     <Card>

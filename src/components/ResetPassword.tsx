@@ -96,7 +96,7 @@ function ResetPassword({
           <Inputs>
             <Block>
               <Text>Mail</Text>
-              <Input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter your email' />
+              <Input value={email} onChange={(e: any) => setEmail(e.target.value)} placeholder='Enter your email' />
             </Block>
           </Inputs>
         </Row>

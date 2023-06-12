@@ -9,7 +9,7 @@ import { SpaceBetween } from '@/components/s-components/Flex'
 import { IJson } from '@/App'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import axios from 'axios'
-import { SERVER_PUBLIC_API } from '@/constants'
+import { SERVER_PUBLIC_API, SERVER_NODE_API } from '@/constants'
 import { SeparatorSM } from '@/components/s-components/utils'
 import Arrow from '../../../assets/icons/arrow-down.png'
 
@@ -107,6 +107,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     try {
       const { data } = await axios.post(`${SERVER_PUBLIC_API}/getUserFromEmail`, {
         identifier: email,
@@ -114,8 +115,26 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
       if (data.error) {
         console.log(data.error)
       }
-      if (nameNode && client && rpc && data) {
-        setJsonData({ name: nameNode, client: client, rpc_key: rpc, token: data.token, wallet: data.wallet, action: 'install' })
+      const { data: dataNode } = await axios.post(`${SERVER_NODE_API}/node/create`, {
+        ProviderId: data.token,
+        RPC: rpc,
+        Client: client,
+        Version: 0.1,
+      });
+      console.log("datadata", dataNode)
+
+
+      if (nameNode && client && rpc && data && dataNode) {
+        setJsonData({
+          name: nameNode,
+          client: client,
+          rpc_key: rpc,
+          osiris_key: "null",
+          provider_id: data.token,
+          node_id: dataNode.ID.toString(),
+          wallet: data.wallet,
+          action: 'install'
+        })
         setUuid(data.token)
         nextStep(4)
       }
@@ -147,7 +166,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
           <Inputs>
             <Block>
               <Text>Node name</Text>
-              <Input value={nameNode} onChange={e => setName(e.target.value)} placeholder='Enter a name' />
+              <Input value={nameNode} onChange={(e: any) => setName(e.target.value)} placeholder='Enter a name' />
             </Block>
             <Block style={{ position: 'relative' }} >
               <Text>Client</Text>
@@ -177,7 +196,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
             </Block>
             <Block>
               <Text>Ethereum RPC url</Text>
-              <Input value={rpc} onChange={e => setRpc(e.target.value)} placeholder='Enter your L1 RPC url key' />
+              <Input value={rpc} onChange={(e: any) => setRpc(e.target.value)} placeholder='Enter your L1 RPC url key' />
             </Block>
           </Inputs>
         </form>
