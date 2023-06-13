@@ -27,13 +27,11 @@ const FlexRow = styled.div`
 export interface IRegister {
   handleSubmit: (e: any) => Promise<void>;
   email: string;
-  wallet: string;
   password: string;
   firstName: string;
   lastName: string;
   userName: string;
   setEmail: (e: string) => void;
-  setWallet: (e: string) => void;
   setPassword: (e: string) => void;
   setFirstName: (e: string) => void;
   setLastName: (e: string) => void;
@@ -61,8 +59,6 @@ function Register({
   step,
   setVerifyPass,
   verifyPass,
-  setWallet,
-  wallet
 }: IRegister) {
 
 
@@ -93,13 +89,6 @@ function Register({
         }
 
         {step === 3 &&
-          <Block>
-            <Text>Wallet</Text>
-            <Input value={wallet} onChange={(e: any) => setWallet(e.target.value)} placeholder='Enter your Starknet wallet' />
-          </Block>
-        }
-
-        {step === 4 &&
           <FlexRow>
             <Block>
               <Text>Password</Text>

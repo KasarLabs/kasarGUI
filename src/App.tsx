@@ -47,7 +47,6 @@ function App() {
   const [pathSD, setPathSD] = useState('')
   const [email, setEmail] = useState('');
   const [uuid, setUuid] = useState('');
-  const [wallet, setWallet] = useState('');
 
 
   const previousStep = () => {
@@ -64,7 +63,7 @@ function App() {
       {step === -1 && <Step1 nextStep={nextStep} />}
       {step === 0 && <Setup0 nextStep={nextStep} previousStep={previousStep} />}
       {step === 8 && <LoginStep nextStep={nextStep} previousStep={previousStep} setEmail={setEmail} email={email} />}
-      {step === 1 && <Setup1 nextStep={nextStep} previousStep={previousStep} setWallet={setWallet} wallet={wallet} />}
+      {step === 1 && <Setup1 nextStep={nextStep} previousStep={previousStep} />}
       {step === 2 && <Setup2 nextStep={nextStep} previousStep={previousStep} setPathSD={setPathSD} pathSD={pathSD} />}
       {step === 3 && <Setup3 nextStep={nextStep} previousStep={previousStep} setUuid={setUuid} setJsonData={setJsonData} jsonData={jsonData} email={email} />}
       {step === 4 && <Setup4 nextStep={nextStep} previousStep={previousStep} jsonData={jsonData} pathSD={pathSD} setPathSD={setPathSD} />}
