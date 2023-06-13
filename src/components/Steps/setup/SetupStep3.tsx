@@ -103,6 +103,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
   const [nameNode, setName] = useState('')
   const [client, setClient] = useState('pathfinder')
   const [rpc, setRpc] = useState('')
+  const [wallet, setWallet] = useState('')
   const [open, setOpen] = useState(false)
 
   const handleSubmit = async (e: any) => {
@@ -121,8 +122,6 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
         Client: client,
         Version: 0.1,
       });
-      console.log("datadata", dataNode)
-
 
       if (nameNode && client && rpc && data && dataNode) {
         setJsonData({
@@ -132,7 +131,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
           osiris_key: "null",
           provider_id: data.token,
           node_id: dataNode.ID.toString(),
-          wallet: data.wallet,
+          wallet: wallet,
           action: 'install'
         })
         setUuid(data.token)
@@ -197,6 +196,10 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
             <Block>
               <Text>Ethereum RPC url</Text>
               <Input value={rpc} onChange={(e: any) => setRpc(e.target.value)} placeholder='Enter your L1 RPC url key' />
+            </Block>
+            <Block>
+              <Text>Your Wallet</Text>
+              <Input value={wallet} onChange={(e: any) => setWallet(e.target.value)} placeholder='Enter your Starknet wallet' />
             </Block>
           </Inputs>
         </form>

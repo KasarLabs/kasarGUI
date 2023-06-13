@@ -62,7 +62,8 @@ function Step2({ nextStep, previousStep, setPathSD, pathSD }: StepProps) {
   }
 
   ipcRenderer.on('selected-directory', (event, path) => {
-    setPathSD(path)
+    console.log('path', path)
+    setPathSD(path + '/src/')
   })
 
   // useEffect(() => {
