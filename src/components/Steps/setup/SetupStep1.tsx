@@ -127,7 +127,7 @@ function Step1({ nextStep, previousStep }: PreviousStepProps) {
   }
 
   function isDisabledButtonSubmit(step: number, password: string, verifyPass: string) {
-    if (step === 4) {
+    if (step === 3) {
       if (!password) {
         return true
       }
