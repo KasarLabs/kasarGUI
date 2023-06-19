@@ -39,7 +39,9 @@ const Row = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  p {
+  text-align: center;
+}
 `
 
 const DisplayNode = styled.div`
@@ -187,8 +189,8 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       </Rows>
       <Separator />
       <SpaceBetween>
-        <ButtonSmall style={{ fontSize: '12px' }} onClick={() => shell.openExternal('https://app.kasar.io')}>Track node</ButtonSmall>
-        <ButtonSmall style={{ fontSize: '12px' }} onClick={() => nextStep(7)}>Query your node (advanced)</ButtonSmall>
+        <ButtonSmall onClick={() => shell.openExternal('https://app.kasar.io')}>Track</ButtonSmall>
+        <ButtonSmall style={{ fontSize: '16px' }} onClick={() => nextStep(7)}>Query (advanced)</ButtonSmall>
       </SpaceBetween>
     </Card>
   )

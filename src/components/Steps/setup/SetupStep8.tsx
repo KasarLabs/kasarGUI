@@ -54,7 +54,49 @@ type PreviousStepProps = {
 
 function Step8({ nextStep, previousStep }: PreviousStepProps) {
   const [loading, setLoading] = useState(true)
+  const [IP, setIP] = useState('')
 
+
+  const getData = async () => {
+    const res = await axios.get("https://api.ipify.org/?format=json");
+    console.log(res.data);
+    setIP(res.data.ip + ':9545');
+  };
+
+  useEffect(() => {
+    //passing getData method to the lifecycle method
+    getData();
+  }, []);
+  console.log(IP)
+
+  // curl - X POST \
+  // -H "Content-Type: application/json" \
+  // --data '{"jsonrpc":"2.0","method":"starknet_blockNumber","params":[],"id":1}' \
+  // http://192.168.1.74:9545/
+
+  useEffect(() => {
+    const queryIP = async () => {
+      const response = await axios.post(
+        'http://192.168.1.74:9545/',
+        {
+          'jsonrpc': '2.0',
+          'method': 'starknet_blockNumber',
+          'params': [],
+          'id': 1
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      console.log(response)
+      //une fois le call réussi => confetti: your RPC has been successfuly exposed at url:
+      //mettre IP dans box copié collable
+      //Puis afficher bouton Track
+    }
+    queryIP()
+  }, [])
   return (
     <Card>
       <Rows>

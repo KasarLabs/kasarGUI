@@ -116,9 +116,16 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
       if (data.error) {
         console.log(data.error)
       }
+      console.log(nameNode)
+      console.log(data.token)
+      console.log(wallet)
+      console.log(client)
       const { data: dataNode } = await axios.post(`${SERVER_NODE_API}/node/create`, {
+        ID: 0,
+        Name: nameNode,
         ProviderId: data.token,
-        RPC: rpc,
+        Wallet: wallet,
+        State: 'null',
         Client: client,
         Version: 0.1,
       });
@@ -147,8 +154,8 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
     setOpen(!open)
   }
 
-  function isDisabledButton(nameNode: string, client: string, rpc: string) {
-    if (!nameNode || !client || !rpc)
+  function isDisabledButton(nameNode: string, client: string, rpc: string, wallet: string) {
+    if (!nameNode || !client || !rpc || !wallet)
       return true
     return false;
   }
@@ -206,7 +213,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
         <SeparatorSM />
         <SpaceBetween>
           <ButtonSmall type='button' onClick={previousStep}>Prev</ButtonSmall>
-          <ButtonSmall disabled={isDisabledButton(nameNode, client, rpc)} type='submit' form='auth'>Submit</ButtonSmall>
+          <ButtonSmall disabled={isDisabledButton(nameNode, client, rpc, wallet)} type='submit' form='auth'>Submit</ButtonSmall>
         </SpaceBetween>
       </Rows>
     </Card>
