@@ -90,6 +90,8 @@ type PreviousStepProps = {
 function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   const [loading, setLoading] = useState(true)
   const [nodes, setNodes] = useState([])
+  const [stateNode, setStateNode] = useState('')
+
   const [l2sync, setL2Sync] = useState()
 
   useEffect(() => {
@@ -134,6 +136,22 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
     }
   }, [loading])
 
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    const callState = async () => {
+      if (nodes) {
+        //@ts-ignore
+        const index = String(nodes[nodes.length - 1].ID)
+        const { data } = await axios.get(`${SERVER_NODE_API}/node/getInfos?node_id=${index}&provider_id=${uuid}`);
+        setStateNode(data?.Node?.State);
+      }
+    };
+    callState()
+    intervalId = setInterval(callState, 5000); // Call the API every 5 seconds
+    return () => clearInterval(intervalId); // Clean up the interval on unmount
+  }, [nodes])
+
   return (
     <Card>
       <Rows>
@@ -146,6 +164,21 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
               </span>
             }
           </Text>
+          {stateNode === 'Created' &&
+            <TextGray>state: node created (step 1/5)</TextGray>
+          }
+          {stateNode === 'Install Tools' &&
+            <TextGray>state: installing tools (step 2/5)</TextGray>
+          }
+          {stateNode === 'Setup Docker' &&
+            <TextGray>state: setup docker (step 3/5)</TextGray>
+          }
+          {stateNode === 'Starting' &&
+            <TextGray>state: starting (step 4/5)</TextGray>
+          }
+          {stateNode === 'Run' &&
+            <TextGray>state: Run (step 5/5)</TextGray>
+          }
         </Row>
         <Separator />
         <Row>
