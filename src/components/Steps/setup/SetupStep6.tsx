@@ -1,7 +1,7 @@
 import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { Gradient, H1, Text, TextGray, TextGraySM } from '../../s-components/Texts'
-import styled, { css } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
 import { GradientText, Separator, SeparatorSM } from '@/components/s-components/utils'
@@ -11,9 +11,17 @@ import { TailSpin } from 'react-loader-spinner'
 import { IJson } from '@/App'
 import { SpaceBetween } from '@/components/s-components/Flex'
 import { shell } from 'electron'
-
 const Container = styled.div`
     width: 100%;
+`;
+
+const animateBar = keyframes`
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0% 0;
+    }
 `;
 
 const ProgressBar = styled.ul`
@@ -64,11 +72,12 @@ const ProgressBar = styled.ul`
         }
 
         &.active + li:after {
-            background-color: #2962D2;
+            background: linear-gradient(90deg, transparent, #2962D2, transparent);
+            background-size: 200% 100%;
+            animation: ${animateBar} 5s linear infinite; /* 2s duration, linear speed, infinite loop */
         }
     }
 `;
-
 
 const Rows = styled.div`
   display: flex;
@@ -98,7 +107,7 @@ type PreviousStepProps = {
 function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   const [loading, setLoading] = useState(true)
   const [nodes, setNodes] = useState([])
-  const [stateNode, setStateNode] = useState('')
+  const [stateNode, setStateNode] = useState('Starting')
   const [activeState, setActiveState] = useState(0)
 
 
