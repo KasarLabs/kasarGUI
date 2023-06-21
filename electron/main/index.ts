@@ -78,6 +78,10 @@ async function createWindow() {
     return { action: 'deny' }
   })
 
+  if (process.platform === 'darwin') {
+    app.dock.setIcon(path.join(__dirname, 'build/icon.icns'))
+  }
+
   // Apply electron-updater
   update(win)
 }
