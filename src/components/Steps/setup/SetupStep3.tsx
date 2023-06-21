@@ -48,7 +48,7 @@ const Selector = styled.div`
   position: absolute;
   left: 80%;
   top:90%;
-  width: 200px;
+  width: 110px;
   background-color: #FFF;
   border: none;
   box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
@@ -116,10 +116,6 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
       if (data.error) {
         console.log(data.error)
       }
-      console.log(nameNode)
-      console.log(data.token)
-      console.log(wallet)
-      console.log(client)
       const { data: dataNode } = await axios.post(`${SERVER_NODE_API}/node/create`, {
         ID: 0,
         Name: nameNode,

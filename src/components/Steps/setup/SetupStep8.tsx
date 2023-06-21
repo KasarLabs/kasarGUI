@@ -59,7 +59,6 @@ function Step8({ nextStep, previousStep }: PreviousStepProps) {
 
   const getData = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
-    console.log(res.data);
     setIP(res.data.ip + ':9545');
   };
 
@@ -67,7 +66,6 @@ function Step8({ nextStep, previousStep }: PreviousStepProps) {
     //passing getData method to the lifecycle method
     getData();
   }, []);
-  console.log(IP)
 
   // curl - X POST \
   // -H "Content-Type: application/json" \
@@ -90,7 +88,6 @@ function Step8({ nextStep, previousStep }: PreviousStepProps) {
           }
         }
       );
-      console.log(response)
       //une fois le call réussi => confetti: your RPC has been successfuly exposed at url:
       //mettre IP dans box copié collable
       //Puis afficher bouton Track
