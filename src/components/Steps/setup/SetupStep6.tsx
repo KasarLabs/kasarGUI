@@ -25,58 +25,58 @@ const animateBar = keyframes`
 `;
 
 const ProgressBar = styled.ul`
-    counter-reset: step;
+  counter-reset: step;
 
-    li {
-        list-style: none;
-        display: inline-block;
-        width: 20%;
-        position: relative;
-        text-align: center;
-        cursor: pointer;
-        font-family: 'Inter';
-        &:before {
-            content: counter(step);
-            counter-increment: step;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            border: 2px solid #ddd;
-            border-radius: 100%;
-            display: block;
-            text-align: center;
-            background-color: #fff;
-        }
+  li {
+      list-style: none;
+      display: inline-block;
+      width: 14.2%;
+      position: relative;
+      text-align: center;
+      cursor: pointer;
+      font-family: 'Inter';
+      &:before {
+          content: counter(step);
+          counter-increment: step;
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          border: 2px solid #ddd;
+          border-radius: 100%;
+          display: block;
+          text-align: center;
+          background-color: #fff;
+      }
 
-        &:after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background-color: #ddd;
-            top: 15px;
-            left: -60%;
-            z-index: -1;
-        }
+      &:after {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 2px;
+          background-color: #ddd;
+          top: 15px;
+          left: -60%;
+          z-index: -1;
+      }
 
-        &:first-child:after {
-            content: none;
-        }
+      &:first-child:after {
+          content: none;
+      }
 
-        &.active {
-            color: #2962D2;
+      &.active {
+          color: #2962D2;
 
-            &:before {
-                border-color: #2962D2;
-            }
-        }
+          &:before {
+              border-color: #2962D2;
+          }
+      }
 
-        &.active + li:after {
-            background: linear-gradient(90deg, transparent, #2962D2, transparent);
-            background-size: 200% 100%;
-            animation: ${animateBar} 5s linear infinite; /* 2s duration, linear speed, infinite loop */
-        }
-    }
+      &.active + li:after {
+          background: linear-gradient(90deg, transparent, #2962D2, transparent);
+          background-size: 200% 100%;
+          animation: ${animateBar} 5s linear infinite; /* 2s duration, linear speed, infinite loop */
+      }
+  }
 `;
 
 const Rows = styled.div`
@@ -107,7 +107,7 @@ type PreviousStepProps = {
 function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   const [loading, setLoading] = useState(true)
   const [nodes, setNodes] = useState([])
-  const [stateNode, setStateNode] = useState('Starting')
+  const [stateNode, setStateNode] = useState('Created')
   const [activeState, setActiveState] = useState(0)
 
 
@@ -178,12 +178,16 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
           return 0;
         case 'Install Tools':
           return 1;
-        case 'Setup Docker':
+        case 'Download Mainnet':
           return 2;
-        case 'Starting':
+        case 'Unzip Mainnet':
           return 3;
-        case 'Run':
+        case 'Setup Docker':
           return 4;
+        case 'Starting':
+          return 5;
+        case 'Run':
+          return 6;
         default:
           return 0;
       }
@@ -203,6 +207,12 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
             {stateNode === 'Install Tools' &&
               <TextGray>state: installing tools</TextGray>
             }
+            {stateNode === 'Download Mainnet' &&
+              <TextGray>state: download mainnet</TextGray>
+            }
+            {stateNode === 'Unzip Mainnet' &&
+              <TextGray>state: unzip mainnet</TextGray>
+            }
             {stateNode === 'Setup Docker' &&
               <TextGray>state: setup docker</TextGray>
             }
@@ -218,6 +228,8 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
               <li className={activeState >= 2 ? 'active' : ''}></li>
               <li className={activeState >= 3 ? 'active' : ''}></li>
               <li className={activeState >= 4 ? 'active' : ''}></li>
+              <li className={activeState >= 5 ? 'active' : ''}></li>
+              <li className={activeState >= 6 ? 'active' : ''}></li>
             </ProgressBar>
           </Container>
           <Text>Please wait, synchronization is in progress...<br />
