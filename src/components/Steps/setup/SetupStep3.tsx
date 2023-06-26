@@ -135,7 +135,7 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
           provider_id: data.token,
           node_id: dataNode.ID.toString(),
           wallet: wallet,
-          action: 'install'
+          action: 'update'
         })
         setUuid(data.token)
         nextStep(4)
