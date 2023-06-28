@@ -11,8 +11,17 @@ import { TailSpin } from 'react-loader-spinner'
 import { IJson } from '@/App'
 import { SpaceBetween } from '@/components/s-components/Flex'
 import { shell } from 'electron'
+import { AiFillWarning } from 'react-icons/ai';
+
+
 const Container = styled.div`
     width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    p {
+      text-align: center;
+    }
 `;
 
 const animateBar = keyframes`
@@ -30,7 +39,7 @@ const ProgressBar = styled.ul`
   li {
       list-style: none;
       display: inline-block;
-      width: 14.2%;
+      width: 16.6%;
       position: relative;
       text-align: center;
       cursor: pointer;
@@ -84,6 +93,12 @@ const Rows = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+`
+
+const Flex = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `
 
 const Row = styled.div`
@@ -198,38 +213,9 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
       <Rows>
         <Row>
           <H1>Fetching your <Gradient>node</Gradient></H1>
-          <Container>
-            {stateNode === 'Created' &&
-              <TextGray>state: node created</TextGray>
-            }
-            {stateNode === 'Install Tools' &&
-              <TextGray>state: installing tools</TextGray>
-            }
-            {stateNode === 'Download Mainnet' &&
-              <TextGray>state: download mainnet</TextGray>
-            }
-            {stateNode === 'Unzip Mainnet' &&
-              <TextGray>state: unzip mainnet</TextGray>
-            }
-            {stateNode === 'Setup Docker' &&
-              <TextGray>state: setup docker</TextGray>
-            }
-            {stateNode === 'Starting' &&
-              <TextGray>state: starting</TextGray>
-            }
-            {stateNode === 'Run' &&
-              <TextGray>state: Run</TextGray>
-            }
-            <ProgressBar>
-              <li className='active'></li>
-              <li className={activeState >= 1 ? 'active' : ''}></li>
-              <li className={activeState >= 2 ? 'active' : ''}></li>
-              <li className={activeState >= 3 ? 'active' : ''}></li>
-              <li className={activeState >= 4 ? 'active' : ''}></li>
-              <li className={activeState >= 5 ? 'active' : ''}></li>
-              <li className={activeState >= 6 ? 'active' : ''}></li>
-            </ProgressBar>
-          </Container>
+
+
+
           <Text>Please wait, synchronization is in progress...<br />
             {!loading &&
               <span>
@@ -240,7 +226,6 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
         </Row>
         <Separator />
         <Row>
-
           {loading &&
             <TailSpin
               height="100"
@@ -278,7 +263,42 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
           }
         </Row>
       </Rows>
+
       <Separator />
+      <Container>
+        {stateNode === 'Created' &&
+          <TextGray>state: node created</TextGray>
+        }
+        {stateNode === 'Install Tools' &&
+          <TextGray>state: installing tools</TextGray>
+        }
+        {stateNode === 'Download Mainnet' &&
+          <TextGray>state: download mainnet</TextGray>
+        }
+        {stateNode === 'Unzip Mainnet' &&
+          <TextGray>state: unzip mainnet</TextGray>
+        }
+        {stateNode === 'Starting' &&
+          <TextGray>state: starting</TextGray>
+        }
+        {stateNode === 'Run' &&
+          <TextGray>state: Run</TextGray>
+        }
+
+        <ProgressBar>
+          <li className='active'></li>
+          <li className={activeState >= 1 ? 'active' : ''}></li>
+          <li className={activeState >= 2 ? 'active' : ''}></li>
+          <li className={activeState >= 3 ? 'active' : ''}></li>
+          <li className={activeState >= 5 ? 'active' : ''}></li>
+          <li className={activeState >= 6 ? 'active' : ''}></li>
+        </ProgressBar>
+      </Container>
+      <Flex>
+        <AiFillWarning />
+        <TextGray style={{ fontSize: "10px" }}>This could take some time, you can exit this app and track your node.</TextGray>
+      </Flex>
+      <SeparatorSM />
       <SpaceBetween>
         <div />
         {/* <ButtonSmall style={{ fontSize: '16px' }} onClick={() => nextStep(7)}>Query (advanced)</ButtonSmall> */}
