@@ -182,8 +182,6 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
           return 2;
         case 'Unzip Mainnet':
           return 3;
-        case 'Setup Docker':
-          return 4;
         case 'Starting':
           return 5;
         case 'Run':
