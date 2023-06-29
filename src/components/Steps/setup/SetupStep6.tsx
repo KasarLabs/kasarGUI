@@ -173,11 +173,28 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
+    function getObjectWithGreatestID(objects: MyObject[]): MyObject | undefined {
+      if (objects.length === 0) {
+        return undefined;
+      }
+
+      let maxObject: MyObject = objects[0]; // Assume first object has the greatest ID
+
+      for (let i = 1; i < objects.length; i++) {
+        const currentObject = objects[i];
+
+        if (currentObject.ID > maxObject.ID) {
+          maxObject = currentObject;
+        }
+      }
+
+      return maxObject;
+    }
+
     const callState = async () => {
       if (nodes) {
-        //@ts-ignore
-        const index = String(nodes[nodes.length - 1].ID)
-        const { data } = await axios.get(`${SERVER_NODE_API}/node/getInfos?node_id=${index}&provider_id=${uuid}`);
+        const index = getObjectWithGreatestID(nodes);
+        const { data } = await axios.get(`${SERVER_NODE_API}/node/getInfos?node_id=${index?.ID}&provider_id=${uuid}`);
         setStateNode(data?.Node?.State);
       }
     };
@@ -208,6 +225,7 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
     const res = getActiveState()
     setActiveState(res)
   }, [stateNode])
+  console.log(stateNode)
   return (
     <Card>
       <Rows>
