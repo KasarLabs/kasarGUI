@@ -173,12 +173,12 @@ function Step6({ nextStep, previousStep, uuid, jsonData }: PreviousStepProps) {
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
-    function getObjectWithGreatestID(objects: MyObject[]): MyObject | undefined {
+    function getObjectWithGreatestID(objects: any[]): any | undefined {
       if (objects.length === 0) {
         return undefined;
       }
 
-      let maxObject: MyObject = objects[0]; // Assume first object has the greatest ID
+      let maxObject: any = objects[0]; // Assume first object has the greatest ID
 
       for (let i = 1; i < objects.length; i++) {
         const currentObject = objects[i];
