@@ -1,9 +1,7 @@
-import { Button, ButtonSmall, OutlineButton } from '../../s-components/Buttons'
+import { ButtonSmall } from '../../s-components/Buttons'
 import { Card } from '../../s-components/Card'
 import { Gradient, H1, Text, TextGray } from '../../s-components/Texts'
-import styled from 'styled-components'
-import ArrowGray from '../../../assets/icons/ArrowGray.png'
-import SetupGif from '../../../assets/gif/setup.png'
+import styled, { css } from 'styled-components'
 import { Input } from '@/components/s-components/Input'
 import { SpaceBetween } from '@/components/s-components/Flex'
 import { IJson } from '@/App'
@@ -55,18 +53,23 @@ const Selector = styled.div`
   border-radius: 5px;
 `
 
-const Client = styled.div`
+interface ClientProps {
+  disabled?: boolean;
+}
+
+const Client = styled.div<ClientProps>`
   transition: 0.2s;
   padding: 10px;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  background-color: ${({ disabled }) => (disabled ? '#D3D3D3' : 'white')};
   &:hover {
-    background-color: #2962D2;
+    background-color: ${({ disabled }) => (disabled ? '#D3D3D3' : '#2962D2')};
     p {
       color: black;
     }
   }
-`
+`;
 
 const ClientButton = styled.button`
   background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
@@ -188,8 +191,8 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
                       juno
                     </TextGray>
                   </Client>
-                  <Client>
-                    <TextGray onClick={() => selectClient('papyrus')}>
+                  <Client disabled>
+                    <TextGray>
                       papyrus
                     </TextGray>
                   </Client>
