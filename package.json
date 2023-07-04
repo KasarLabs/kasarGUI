@@ -55,6 +55,6 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "build": {
-    "icon": "/favicon.ico"
+    "icon": "public/favicon.ico"
   }
 }
