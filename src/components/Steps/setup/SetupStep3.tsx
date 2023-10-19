@@ -104,7 +104,7 @@ type PreviousStepProps = {
 
 function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }: PreviousStepProps) {
   const [nameNode, setName] = useState('')
-  const [client, setClient] = useState('pathfinder')
+  const [client, setClient] = useState('juno')
   const [rpc, setRpc] = useState('')
   const [wallet, setWallet] = useState('')
   const [open, setOpen] = useState(false)
@@ -181,14 +181,15 @@ function Step3({ nextStep, previousStep, setJsonData, jsonData, email, setUuid }
               </ClientButton>
               {open &&
                 <Selector>
-                  <Client onClick={() => selectClient('pathfinder')}>
-                    <TextGray>
-                      pathfinder
-                    </TextGray>
-                  </Client>
+                  {/* <Client onClick={() => selectClient('pathfinder')}> */}
                   <Client onClick={() => selectClient('juno')}>
                     <TextGray>
                       juno
+                    </TextGray>
+                  </Client>
+                  <Client disabled>
+                    <TextGray>
+                      pathfinder
                     </TextGray>
                   </Client>
                   <Client disabled>
